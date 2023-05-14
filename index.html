@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Empaquetador XY</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Estilos CSS adicionales */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Empaquetador de datos x,y para gráficos</h1>
+    <h2>Instrucciones</h2>
+    <p>Ingrese los datos x e y en la tabla presionando "Enter" para generar más columnas. Al finalizar pulse el botón "Confirmar datos" para empaquetar y verificarlos datos ingresados. Luego podrá descargarlos como un archivo .json</p>
+    
+    <form id="dataForm">
+        <table>
+            <thead>
+                <tr>
+                    <th>Dato X</th>
+                    <th>Dato Y</th>
+                </tr>
+            </thead>
+            <tbody id="dataInputs"></tbody>
+        </table>
+        
+        <button type="submit" id="submitButton" class="btn btn-primary">Confirmar datos</button>
+    </form>
+    
+    <div class="mt-4">
+        <p id="successMessage" style="display: none;">Puntos ingresados con éxito! Verifique que los datos son correctos y a continuación presione el botón "Descargar datos" para guardar el archivo "datos.json"</p>
+        <table id="successTable" class="table table-bordered" style="display: none;"></table>
+    </div>
+    
+    <button type="button" id="downloadButton" onclick="downloadData()" class="btn btn-primary" style="display: none;">Descargar datos</button>
+
+
+    
+    <script>
+        var isGraphGenerated = false;
+        var successTable = document.getElementById('successTable');
+
+        // JavaScript para generar las filas de la tabla según el número de puntos
+        document.getElementById('dataForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (isGraphGenerated) return;
+            
+            isGraphGenerated = true;
+            document.getElementById('submitButton').disabled = true;
+            document.getElementById('successMessage').style.display = 'block';
+            showSuccessTable();
+            document.getElementById('downloadButton').style.display = 'inline-block';
+        });
+
+        // JavaScript para agregar nuevas filas al presionar Enter en los campos de entrada
+        document.getElementById('dataForm').addEventListener('keydown', function(event) {
+            if (isGraphGenerated || event.key !== 'Enter') return;
+            
+            event.preventDefault();
+            var numPoints = document.getElementById('dataInputs').getElementsByTagName('tr').length;
+            createDataRow(numPoints + 1);
+        });
+        
+        function createDataRow(rowNum) {
+            var tableBody = document.getElementById('dataInputs');
+            var row = document.createElement('tr');
+            
+            var cellX = document.createElement('td');
+            var inputX = document.createElement('input');
+            inputX.type = 'number';
+            inputX.name = 'x' + rowNum;
+            inputX.required = true;
+            cellX.appendChild(inputX);
+            
+            var cellY = document.createElement('td');
+            var inputY = document.createElement('input');
+            inputY.type = 'number';
+            inputY.name = 'y' + rowNum;
+            inputY.required = true;
+            cellY.appendChild(inputY);
+            
+            row.appendChild(cellX);
+            row.appendChild(cellY);
+            
+            tableBody.appendChild(row);
+        }
+        
+        // Mostrar la tabla con los puntos ingresados en el mensaje de éxito
+function showSuccessTable() {
+    var tableBody = successTable.createTBody();
+    var rows = document.getElementById('dataInputs').getElementsByTagName('tr');
+
+    for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        var xValue = row.cells[0].querySelector('input').value;
+        var yValue = row.cells[1].querySelector('input').value;
+
+        var newRow = tableBody.insertRow(i);
+        newRow.insertCell(0).textContent = xValue;
+        newRow.insertCell(1).textContent = yValue;
+    }
+
+    successTable.style.display = 'table';
+}
+ // Descargar los puntos como un archivo JSON
+function downloadData() {
+    var xValues = [];
+    var yValues = [];
+    var rows = document.getElementById('dataInputs').getElementsByTagName('tr');
+
+    for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        var xValue = row.cells[0].querySelector('input').value;
+        var yValue = row.cells[1].querySelector('input').value;
+        xValues.push(xValue);
+        yValues.push(yValue);
+    }
+
+    var data = JSON.stringify([{ x: xValues }, { y: yValues }], null, 2);
+    var blob = new Blob([data], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = 'datos.json';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// Crear una fila inicial al cargar la página
+createDataRow(1);
+</script>
+</body>
+</html>
