@@ -4,11 +4,15 @@
     <title>Empaquetador XY</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* Estilos CSS adicionales */
+        h1 {
+            text-align: center;
+        }
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            font-size: 1rem;
         }
         table {
             border-collapse: collapse;
@@ -25,12 +29,16 @@
             border: 1px solid black;
             margin-top: 20px;
         }
+        p.centered {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <h1>Empaquetador de datos x,y para gráficos</h1>
-    <h2>Instrucciones</h2>
+    <h3>Instrucciones</h3>
     <p>Ingrese los datos x e y en la tabla presionando "Enter" para generar más columnas. Al finalizar pulse el botón "Confirmar datos" para empaquetar y verificarlos datos ingresados. Luego podrá descargarlos como un archivo .json</p>
+    <p>[Información] Por el momento la aplicación solo soporta entradas (x,y) positivas, lo que será útil para bosquejar gráficos en la mayoría de los experimentos de laboratorio de Ciencias. </p>
     
     <form id="dataForm">
         <table>
@@ -93,6 +101,7 @@
             var inputX = document.createElement('input');
             inputX.type = 'number';
             inputX.name = 'x' + rowNum;
+            inputX.step = 'any'; // Permite valores decimales
             inputX.required = true;
             cellX.appendChild(inputX);
             
@@ -100,6 +109,7 @@
             var inputY = document.createElement('input');
             inputY.type = 'number';
             inputY.name = 'y' + rowNum;
+            inputY.step = 'any';
             inputY.required = true;
             cellY.appendChild(inputY);
             
@@ -206,5 +216,7 @@ function drawChart() {
     ctx.fillText('y: ' + maxY, margin, margin - 5);
 }
 </script>
+<p class='centered'>(c)2023 - fisicamaldonado.wordpress.com - Prof. Pablo Vaz</p>
+<p class='centered'>Maldonado - Uruguay</p>
 </body>
 </html>
