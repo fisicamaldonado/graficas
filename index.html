@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Empaquetador XY</title>
+    <title>Plots XY</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +17,7 @@
         table {
             border-collapse: collapse;
             margin-bottom: 10px;
+            width: 300px;
         }
         th, td {
             border: 1px solid black;
@@ -29,15 +30,18 @@
             border: 1px solid black;
             margin-top: 20px;
         }
+        p{
+            text-align: justify;
+        }
         p.centered {
             text-align: center;
         }
     </style>
 </head>
 <body>
-    <h1>Empaquetador de datos x,y para gráficos</h1>
+    <h1>Gráficas XY</h1>
     <h3>Instrucciones</h3>
-    <p>Ingrese los datos x e y en la tabla presionando "Enter" para generar más columnas. Al finalizar pulse el botón "Confirmar datos" para empaquetar y verificarlos datos ingresados. Luego podrá descargarlos como un archivo .json</p>
+    <p>Ingrese los datos x e y en la tabla presionando "Enter" para generar más columnas. Al finalizar pulse el botón "Confirmar datos" para empaquetar y verificarlos datos ingresados. Luego podrá descargarlos como un archivo "datos.txt"</p>
     <p>[Información] Por el momento la aplicación solo soporta entradas (x,y) positivas, lo que será útil para bosquejar gráficos en la mayoría de los experimentos de laboratorio de Ciencias. </p>
     
     <form id="dataForm">
@@ -50,17 +54,25 @@
             </thead>
             <tbody id="dataInputs"></tbody>
         </table>
-        
+        <div>
+            <button type="button" id="botonEliminar" onclick="eliminarFila()" class="btn btn-primary" style="display: none;">Eliminar datos</button>
+
+        </div>
         <button type="submit" id="submitButton" class="btn btn-primary">Confirmar datos</button>
     </form>
     
     <div class="mt-4">
-        <p id="successMessage" style="display: none;">Puntos ingresados con éxito! Verifique que los datos son correctos y a continuación presione el botón "Descargar datos" para guardar el archivo "datos.json"</p>
+        <p id="successMessage" style="display: none;">Puntos ingresados con éxito! Verifique que los datos son correctos.</p>
         <table id="successTable" class="table table-bordered" style="display: none;"></table>
     </div>
     <div class="container">
     <canvas id="chartCanvas" width="400" height="400"></canvas>
     </div>
+    <button type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary" style="display: none;">Línea de tendencia</button>
+    <p></p>
+    <p id ='linealFunction' style = "display: none;">linealFunctionText</p>
+
+    <p id="descarga_parrafo" style="display: none;">Si lo desea presione el botón "Descargar datos" para guardar el archivo "datos.txt"</p>
     <button type="button" id="downloadButton" onclick="downloadData()" class="btn btn-primary" style="display: none;">Descargar datos</button>
 
 
@@ -80,6 +92,7 @@
             isGraphGenerated = true;
             document.getElementById('submitButton').disabled = true;
             document.getElementById('successMessage').style.display = 'block';
+            document.getElementById("descarga_parrafo").style.display = "block";
             showSuccessTable();
             document.getElementById('downloadButton').style.display = 'inline-block';
         });
@@ -91,7 +104,32 @@
             event.preventDefault();
             var numPoints = document.getElementById('dataInputs').getElementsByTagName('tr').length;
             createDataRow(numPoints + 1);
+            toggleBotonEliminar();
         });
+
+        function toggleBotonEliminar() {
+      var numFilas = document.getElementById('dataInputs').getElementsByTagName('tr').length;
+      var botonEliminar = document.getElementById('botonEliminar');
+      
+      if (numFilas > 1) {
+        botonEliminar.style.display = 'block';
+      } else {
+        botonEliminar.style.display = 'none';
+      }
+    }
+
+    function eliminarFila() {
+  var table = document.getElementById('dataInputs');
+  var numRows = table.rows.length;
+  
+  if (numRows > 1) {
+    table.deleteRow(numRows - 1);
+    toggleBotonEliminar();
+  }
+}
+
+
+
         
         function createDataRow(rowNum) {
             var tableBody = document.getElementById('dataInputs');
@@ -140,6 +178,8 @@ function showSuccessTable() {
         newRow.insertCell(1).textContent = yValue;
 
         points.push({ x: parseFloat(xValue), y: parseFloat(yValue) });
+        document.getElementById('lineButton').style.display = 'block';
+
     }
 
     drawChart();
@@ -148,34 +188,41 @@ function showSuccessTable() {
     }
  // Descargar los puntos como un archivo JSON
 function downloadData() {
-    var xValues = [];
-    var yValues = [];
+  var xValues = [];
+  var yValues = [];
 
-    var rows = document.getElementById('dataInputs').getElementsByTagName('tr');
+  var rows = document.getElementById('dataInputs').getElementsByTagName('tr');
 
-    for (var i = 0; i < rows.length; i++) {
-        var row = rows[i];
-        var xValue = row.cells[0].querySelector('input').value;
-        var yValue = row.cells[1].querySelector('input').value;
-        xValues.push(xValue);
-        yValues.push(yValue);
-    }
+  for (var i = 0; i < rows.length; i++) {
+    var row = rows[i];
+    var xValue = row.cells[0].querySelector('input').value;
+    var yValue = row.cells[1].querySelector('input').value;
+    xValues.push(xValue);
+    yValues.push(yValue);
+  }
 
-    var data = JSON.stringify([{ x: xValues }, { y: yValues }], null, 2);
-    var blob = new Blob([data], { type: 'application/json' });
-    var url = URL.createObjectURL(blob);
+  var data = "X Values\tY Values\n";
 
-    var link = document.createElement('a');
-    link.href = url;
-    link.download = 'datos.json';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  for (var j = 0; j < xValues.length; j++) {
+    data += xValues[j] + "\t" + yValues[j] + "\n";
+  }
+
+  var blob = new Blob([data], { type: 'text/plain' });
+  var url = URL.createObjectURL(blob);
+
+  var link = document.createElement('a');
+  link.href = url;
+  link.download = 'datos.txt';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
+
 
 
 // Crear una fila inicial al cargar la página
 createDataRow(1);
+toggleBotonEliminar();
 
 // Dibujar el gráfico con los puntos
 function drawChart() {
@@ -207,15 +254,49 @@ function drawChart() {
         ctx.fill();
         ctx.stroke();
     }
+  
     // Agregar los ejes con los datos
     ctx.font = '12px Arial';
     ctx.textAlign = 'end';
     ctx.fillText('0', margin - 5, chartCanvas.height - margin + 15);
-    ctx.fillText('x: ' + maxX, chartCanvas.width - margin, chartCanvas.height - margin + 15);
+    ctx.fillText('x_max: ' + maxX, chartCanvas.width - margin, chartCanvas.height - margin + 15);
     ctx.textAlign = 'start';
-    ctx.fillText('y: ' + maxY, margin, margin - 5);
+    ctx.fillText('y_max: ' + maxY, margin, margin - 5);
+}
+function plotLine(){
+
+    // Dibujar los ejes x e y
+    var maxX = Math.max(...points.map(point => point.x));
+    var maxY = Math.max(...points.map(point => point.y));
+
+    // Margen para ajustar la posición de los puntos y los ejes
+    var margin = 40;
+    if (points.length >= 2) {
+    var xStart = margin + (points[0].x / maxX) * (chartCanvas.width - margin * 2);
+    var yStart = chartCanvas.height - margin - (points[0].y / maxY) * (chartCanvas.height - margin * 2);
+    var xEnd = margin + (points[points.length - 1].x / maxX) * (chartCanvas.width - margin * 2);
+    var yEnd = chartCanvas.height - margin - (points[points.length - 1].y / maxY) * (chartCanvas.height - margin * 2);
+
+    //Cálculo de los coeficientes de la función lineal asociada a la línea
+    var m = (points[points.length - 1].y - points[0].y) / (points[points.length - 1].x - points[0].x);
+    var n = points[0].y - m * points[0].x;
+
+    ctx.beginPath();
+    ctx.moveTo(xStart, yStart);
+    ctx.lineTo(xEnd, yEnd);
+    ctx.strokeStyle = 'blue';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    // Presentar la función lineal
+    var linealFunctionText = ("La función lineal es: y = " + m + "x + " + n);
+    var linealFunctionElement = document.getElementById("linealFunction");
+    linealFunctionElement.textContent = linealFunctionText;
+    linealFunctionElement.style.display = "block";
+    
+  }
 }
 </script>
+<p></p>
 <p class='centered'>(c)2023 - fisicamaldonado.wordpress.com - Prof. Pablo Vaz</p>
 <p class='centered'>Maldonado - Uruguay</p>
 </body>
