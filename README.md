@@ -2,7 +2,7 @@
 
 (Descripción en español más abajo).
 
-The Graph Sketcher web app allows users to create sketches of XY graphs based on provided data. It also provides the ability to add trend lines using linear regression and download the data in TXT format.
+The Plot XY web app allows users to create sketches of XY graphs based on provided data. It also provides the ability to add trend lines using linear regression and download the data in TXT format.
 **Please note that this project is currently under construction, and there are many more functionalities planned to be added in the future.**
 ## Features
 
@@ -43,9 +43,9 @@ Thanks for your support.
 
 ----- Versión en español del README -------
 
-# Aplicación web: Graph Sketcher
+# Aplicación web: Plot XY
 
-La aplicación web Graph Sketcher permite a los usuarios crear bosquejos de gráficas XY basadas en datos proporcionados. También proporciona la capacidad de agregar líneas de tendencia utilizando regresión lineal y descargar los datos en formato TXT.
+La aplicación web Plot XY permite a los usuarios crear bosquejos de gráficas XY basadas en datos proporcionados. También proporciona la capacidad de agregar líneas de tendencia utilizando regresión lineal y descargar los datos en formato TXT.
 **Ten en cuenta que este proyecto está actualmente en construcción y se planean agregar muchas más funcionalidades en el futuro.**
 
 ## Funcionalidades
