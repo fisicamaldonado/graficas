@@ -294,6 +294,9 @@ function plotLine() {
     var m = (numPoints * sumXY - sumX * sumY) / (numPoints * sumXSquared - sumX * sumX);
     var n = (sumY - m * sumX) / numPoints;
 
+    m = parseFloat(m.toFixed(3));
+    n = parseFloat(n.toFixed(3));
+
     ctx.beginPath();
     ctx.moveTo(xStart, yStart);
     ctx.lineTo(xEnd, yEnd);
