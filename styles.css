@@ -1,0 +1,46 @@
+
+h1 {
+    text-align: center;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 10px;
+    font-size: 1rem;
+}
+form {
+    width: 100%;
+    max-width: 400px; 
+    margin: 5px;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 400px;
+}
+th,
+td {
+    border: 1px solid black;
+    padding: 2px;
+}
+input {
+    width: 95%;
+    box-sizing: border-box;
+    margin: 1px 5px;
+}
+button {
+    margin-top: 10px;
+}
+canvas {
+    border: 2px solid #333;
+    margin-top: 20px;
+}
+p{
+    text-align: justify;
+}
+p.centered {
+    text-align: center;
+}
+#tableContainer {
+width: 100%;
+max-width: 400px;
+}

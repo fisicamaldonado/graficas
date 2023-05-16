@@ -5,60 +5,13 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        h1 {
-            text-align: center;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            margin: 10px;
-            font-size: 1rem;
-        }
-        form {
-          width: 100%;
-          max-width: 400px; 
-          margin: 5px;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            max-width: 400px;
-        }
-        th,
-        td {
-          border: 1px solid black;
-          padding: 5px;
-        }
-        input {
-          width: 95%;
-          box-sizing: border-box;
-          margin: 5px;
-        }
-        button {
-            margin-top: 10px;
-        }
-        canvas {
-            border: 2px solid #333;
-            margin-top: 20px;
-        }
-        p{
-            text-align: justify;
-        }
-        p.centered {
-            text-align: center;
-        }
-        #tableContainer {
-        width: 100%;
-        max-width: 400px;
-        }
-
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <h1>Gráficas XY</h1>
 <h3>Instrucciones</h3>
-<p>Ingrese los datos x e y en la tabla presionando "Enter" para generar más columnas. Al finalizar pulse el botón "Confirmar datos" para verificar y graficar los datos ingresados. Luego podrá descargarlos como un archivo "datos.txt"</p>
-<p>[Información] Por el momento la aplicación solo soporta entradas (x,y) positivas y ajuste lineal, lo que será útil para bosquejar gráficos en la mayoría de los experimentos de laboratorio de Ciencias. </p>
+<p>Ingrese los datos x e y en la tabla presionando "Enter" para generar más columnas. Al finalizar pulse el botón "Confirmar datos" para verificar y graficar los datos ingresados. Luego podrá descargarlos como un archivo "datos.txt".</p>
+<p>[Importante] Por el momento la aplicación solo soporta entradas (x,y) positivas y ajuste lineal, lo que será útil para bosquejar gráficos en la mayoría de los experimentos de laboratorio de Ciencias. </p>
 <form id="dataForm">
     <div id="tableContainer">
     <table>
@@ -99,8 +52,9 @@ var successTable = document.getElementById('successTable');
 var chartCanvas = document.getElementById('chartCanvas');
 var ctx = chartCanvas.getContext('2d');
 var points = [];
+createDataRow(1);// Crear una fila inicial al cargar la página
 
-// JavaScript para generar las filas de la tabla según el número de puntos
+// Generar las filas de la tabla y desabilitar el botón "Confirmar datos" al presionarlo
 document.getElementById('dataForm').addEventListener('submit', function(event) {
     event.preventDefault();
     if (isGraphGenerated) return;
@@ -113,7 +67,7 @@ document.getElementById('dataForm').addEventListener('submit', function(event) {
     document.getElementById('downloadButton').style.display = 'inline-block';
 });
 
-// JavaScript para agregar nuevas filas al presionar Enter en los campos de entrada
+// Agregar nuevas filas al presionar Enter en los campos de entrada
 document.getElementById('dataForm').addEventListener('keydown', function(event) {
     if (isGraphGenerated || event.key !== 'Enter') return;
 
@@ -122,7 +76,8 @@ document.getElementById('dataForm').addEventListener('keydown', function(event) 
     createDataRow(numPoints + 1);
     toggleBotonEliminar();
 });
-    
+
+//El botón de eliminar filas solo será visible cuando éstas sean mayores a 1
 function toggleBotonEliminar() {
   var numFilas = document.getElementById('dataInputs').getElementsByTagName('tr').length;
   var botonEliminar = document.getElementById('botonEliminar');
@@ -143,11 +98,11 @@ function eliminarFila() {
     toggleBotonEliminar();
   }
 }
-        
+
+//Crear filas de la tabla de entrada
 function createDataRow(rowNum) {
     var tableBody = document.getElementById('dataInputs');
     var row = document.createElement('tr');
-
     var cellX = document.createElement('td');
     var inputX = document.createElement('input');
     inputX.type = 'number';
@@ -198,7 +153,7 @@ function showSuccessTable() {
 
     successTable.style.display = 'table';
     }
- // Descargar los puntos como un archivo JSON
+ // Descargar los puntos como un archivo TXT
 function downloadData() {
   var xValues = [];
   var yValues = [];
@@ -229,12 +184,6 @@ function downloadData() {
   link.click();
   document.body.removeChild(link);
 }
-
-
-
-// Crear una fila inicial al cargar la página
-createDataRow(1);
-toggleBotonEliminar();
 
 // Dibujar el gráfico con los puntos
 function drawChart() {
@@ -283,11 +232,6 @@ function plotLine() {
   // Margen para ajustar la posición de los puntos y los ejes
   var margin = 36;
   if (points.length >= 2) {
-    var xStart = margin + (points[0].x / maxX) * (chartCanvas.width - margin * 2);
-    var yStart = chartCanvas.height - margin - (points[0].y / maxY) * (chartCanvas.height - margin * 2);
-    var xEnd = margin + (points[points.length - 1].x / maxX) * (chartCanvas.width - margin * 2);
-    var yEnd = chartCanvas.height - margin - (points[points.length - 1].y / maxY) * (chartCanvas.height - margin * 2);
-
     // Cálculo de los coeficientes de la función lineal asociada a la línea
     var x = points.map(point => point.x);//Extrae las coordenadas de cada punto en el array 'points' y las almacena en los arrays x e y, respectivamente.
     var y = points.map(point => point.y);
@@ -331,7 +275,8 @@ function plotLine() {
 </script>
 <button onclick="location.reload();" class="btn btn-primary">Reiniciar</button>
 <p></p>
-<p class='centered'>(c)2023 - fisicamaldonado.wordpress.com - Prof. Pablo Vaz</p>
+<p class='centered'>(c)2023 - Prof. Pablo Vaz</p>
+<a href="https://fisicamaldonado.wordpress.com" target="_blank"><p class='centered'>fisicamaldonado.wordpress.com</p></a>
 <p class='centered'>Maldonado - Uruguay</p>
 </body>
 </html>
