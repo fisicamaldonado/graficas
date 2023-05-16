@@ -36,15 +36,20 @@
         p.centered {
             text-align: center;
         }
+        #tableContainer {
+        width: 100%;
+        max-width: 100%;
+        }
+
     </style>
 </head>
 <body>
     <h1>Gráficas XY</h1>
     <h3>Instrucciones</h3>
-    <p>Ingrese los datos x e y en la tabla presionando "Enter" para generar más columnas. Al finalizar pulse el botón "Confirmar datos" para empaquetar y verificarlos datos ingresados. Luego podrá descargarlos como un archivo "datos.txt"</p>
-    <p>[Información] Por el momento la aplicación solo soporta entradas (x,y) positivas, lo que será útil para bosquejar gráficos en la mayoría de los experimentos de laboratorio de Ciencias. </p>
-    
+    <p>Ingrese los datos x e y en la tabla presionando "Enter" para generar más columnas. Al finalizar pulse el botón "Confirmar datos" para verificar y graficar los datos ingresados. Luego podrá descargarlos como un archivo "datos.txt"</p>
+    <p>[Información] Por el momento la aplicación solo soporta entradas (x,y) positivas y ajuste lineal, lo que será útil para bosquejar gráficos en la mayoría de los experimentos de laboratorio de Ciencias. </p>
     <form id="dataForm">
+        <div id="tableContainer">
         <table>
             <thead>
                 <tr>
@@ -54,6 +59,7 @@
             </thead>
             <tbody id="dataInputs"></tbody>
         </table>
+        </div>
         <div>
             <button type="button" id="botonEliminar" onclick="eliminarFila()" class="btn btn-primary" style="display: none;">Eliminar datos</button>
 
@@ -263,38 +269,59 @@ function drawChart() {
     ctx.textAlign = 'start';
     ctx.fillText('y_max: ' + maxY, margin, margin - 5);
 }
-function plotLine(){
+function plotLine() {
+  // Dibujar los ejes x e y
+  var maxX = Math.max(...points.map(point => point.x));
+  var maxY = Math.max(...points.map(point => point.y));
 
-    // Dibujar los ejes x e y
-    var maxX = Math.max(...points.map(point => point.x));
-    var maxY = Math.max(...points.map(point => point.y));
-
-    // Margen para ajustar la posición de los puntos y los ejes
-    var margin = 40;
-    if (points.length >= 2) {
+  // Margen para ajustar la posición de los puntos y los ejes
+  var margin = 40;
+  if (points.length >= 2) {
     var xStart = margin + (points[0].x / maxX) * (chartCanvas.width - margin * 2);
     var yStart = chartCanvas.height - margin - (points[0].y / maxY) * (chartCanvas.height - margin * 2);
     var xEnd = margin + (points[points.length - 1].x / maxX) * (chartCanvas.width - margin * 2);
     var yEnd = chartCanvas.height - margin - (points[points.length - 1].y / maxY) * (chartCanvas.height - margin * 2);
 
-    //Cálculo de los coeficientes de la función lineal asociada a la línea
-    var m = (points[points.length - 1].y - points[0].y) / (points[points.length - 1].x - points[0].x);
-    var n = points[0].y - m * points[0].x;
+    // Cálculo de los coeficientes de la función lineal asociada a la línea
+    var x = points.map(point => point.x);//Extrae las coordenadas de cada punto en el array 'points' y las almacena en los arrays x e y, respectivamente.
+    var y = points.map(point => point.y);
+    var sumX = x.reduce((a, b) => a + b, 0);//Calcula la suma de todos los valores en x y y.
+    var sumY = y.reduce((a, b) => a + b, 0);
+    var sumXY = x.map((value, index) => value * y[index]).reduce((a, b) => a + b, 0);//Calcula la suma de los productos de cada elemento en x y su correspondiente elemento en y.
+    var sumXSquared = x.map(value => value * value).reduce((a, b) => a + b, 0);//Calcula la suma de los cuadrados de los valores en x.
+    var numPoints = points.length;//Determina el número de puntos disponibles
 
+    var m = (numPoints * sumXY - sumX * sumY) / (numPoints * sumXSquared - sumX * sumX);
+    var n = (sumY - m * sumX) / numPoints;
+
+    m = parseFloat(m.toFixed(3));
+    n = parseFloat(n.toFixed(3));
+
+    var chartWidth = chartCanvas.width - margin * 2;
+    var chartHeight = chartCanvas.height - margin * 2;
+
+    // Calcular las coordenadas de inicio y fin de la línea de tendencia dentro del margen
+    var xStart = margin;
+    var yStart = chartCanvas.height - margin - (n / maxY) * chartHeight;
+    var xEnd = margin + chartWidth;
+    var yEnd = chartCanvas.height - margin - ((m * maxX + n) / maxY) * chartHeight;
+
+    // Dibujar la línea de tendencia dentro del margen
     ctx.beginPath();
     ctx.moveTo(xStart, yStart);
     ctx.lineTo(xEnd, yEnd);
     ctx.strokeStyle = 'blue';
     ctx.lineWidth = 2;
     ctx.stroke();
+
     // Presentar la función lineal
-    var linealFunctionText = ("La función lineal es: y = " + m + "x + " + n);
+    var linealFunctionText = "La función lineal es: y = " + m + "x + " + n;
     var linealFunctionElement = document.getElementById("linealFunction");
     linealFunctionElement.textContent = linealFunctionText;
     linealFunctionElement.style.display = "block";
-    
   }
 }
+
 </script>
 <p></p>
 <p class='centered'>(c)2023 - fisicamaldonado.wordpress.com - Prof. Pablo Vaz</p>
