@@ -42,7 +42,6 @@
         canvas {
             border: 2px solid #333;
             margin-top: 20px;
-            margin: 5px;
         }
         p{
             text-align: justify;
@@ -86,7 +85,7 @@
         <table id="successTable" class="table table-bordered" style="display: none;"></table>
     </div>
     <div class="container">
-    <canvas id="chartCanvas" width="400" height="400"></canvas>
+    <canvas id="chartCanvas" width="360" height="360"></canvas>
     </div>
     <button type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary" style="display: none;">Línea de tendencia</button>
     <p></p>
@@ -289,7 +288,7 @@ function plotLine() {
   var maxY = Math.max(...points.map(point => point.y));
 
   // Margen para ajustar la posición de los puntos y los ejes
-  var margin = 40;
+  var margin = 36;
   if (points.length >= 2) {
     var xStart = margin + (points[0].x / maxX) * (chartCanvas.width - margin * 2);
     var yStart = chartCanvas.height - margin - (points[0].y / maxY) * (chartCanvas.height - margin * 2);
