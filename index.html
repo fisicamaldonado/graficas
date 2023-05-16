@@ -55,87 +55,86 @@
     </style>
 </head>
 <body>
-    <h1>Gráficas XY</h1>
-    <h3>Instrucciones</h3>
-    <p>Ingrese los datos x e y en la tabla presionando "Enter" para generar más columnas. Al finalizar pulse el botón "Confirmar datos" para verificar y graficar los datos ingresados. Luego podrá descargarlos como un archivo "datos.txt"</p>
-    <p>[Información] Por el momento la aplicación solo soporta entradas (x,y) positivas y ajuste lineal, lo que será útil para bosquejar gráficos en la mayoría de los experimentos de laboratorio de Ciencias. </p>
-    <form id="dataForm">
-        <div id="tableContainer">
-        <table>
-            <thead>
-                <tr>
-                    <th>Dato X</th>
-                    <th>Dato Y</th>
-                </tr>
-            </thead>
-            <tbody id="dataInputs"></tbody>
-        </table>
-        </div>
-        <div>
-            <button type="button" id="botonEliminar" onclick="eliminarFila()" class="btn btn-primary" style="display: none;">Eliminar datos</button>
-
-        </div>
-        <button type="submit" id="submitButton" class="btn btn-primary">Confirmar datos</button>
-    </form>
-    
-    <div class="mt-4">
-        <p id="successMessage" style="display: none;">Puntos ingresados con éxito! Verifique que los datos son correctos.</p>
-        <table id="successTable" class="table table-bordered" style="display: none;"></table>
+<h1>Gráficas XY</h1>
+<h3>Instrucciones</h3>
+<p>Ingrese los datos x e y en la tabla presionando "Enter" para generar más columnas. Al finalizar pulse el botón "Confirmar datos" para verificar y graficar los datos ingresados. Luego podrá descargarlos como un archivo "datos.txt"</p>
+<p>[Información] Por el momento la aplicación solo soporta entradas (x,y) positivas y ajuste lineal, lo que será útil para bosquejar gráficos en la mayoría de los experimentos de laboratorio de Ciencias. </p>
+<form id="dataForm">
+    <div id="tableContainer">
+    <table>
+        <thead>
+            <tr>
+                <th>Dato X</th>
+                <th>Dato Y</th>
+            </tr>
+        </thead>
+        <tbody id="dataInputs"></tbody>
+    </table>
     </div>
-    <div class="container">
-    <canvas id="chartCanvas" width="360" height="360"></canvas>
+    <div>
+      <button type="button" id="botonEliminar" onclick="eliminarFila()" class="btn btn-primary" style="display: none;">Eliminar datos</button>
     </div>
-    <button type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary" style="display: none;">Línea de tendencia</button>
-    <p></p>
-    <p id ='linealFunction' style = "display: none;">linealFunctionText</p>
+  <button type="submit" id="submitButton" class="btn btn-primary">Confirmar datos</button>
+</form>
+    
+<div class="mt-4">
+    <p id="successMessage" style="display: none;">Puntos ingresados con éxito! Verifique que los datos son correctos.</p>
+    <table id="successTable" class="table table-bordered" style="display: none;"></table>
+</div>
+<div class="container">
+<canvas id="chartCanvas" width="360" height="360"></canvas>
+</div>
+<button type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary" style="display: none;">Línea de tendencia</button>
+<p></p>
+<p id ='linealFunction' style = "display: none;">linealFunctionText</p>
 
-    <p id="descarga_parrafo" style="display: none;">Si lo desea presione el botón "Descargar datos" para guardar el archivo "datos.txt"</p>
-    <button type="button" id="downloadButton" onclick="downloadData()" class="btn btn-primary" style="display: none;">Descargar datos</button>
+<p id="descarga_parrafo" style="display: none;">Si lo desea presione el botón "Descargar datos" para guardar el archivo "datos.txt"</p>
+<button type="button" id="downloadButton" onclick="downloadData()" class="btn btn-primary" style="display: none;">Descargar datos</button>
 
 
     
-    <script>
-        var isGraphGenerated = false;
-        var successTable = document.getElementById('successTable');
-        var chartCanvas = document.getElementById('chartCanvas');
-        var ctx = chartCanvas.getContext('2d');
-        var points = [];
+<script>
+var isGraphGenerated = false;
+var successTable = document.getElementById('successTable');
+var chartCanvas = document.getElementById('chartCanvas');
+var ctx = chartCanvas.getContext('2d');
+var points = [];
 
-        // JavaScript para generar las filas de la tabla según el número de puntos
-        document.getElementById('dataForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            if (isGraphGenerated) return;
-            
-            isGraphGenerated = true;
-            document.getElementById('submitButton').disabled = true;
-            document.getElementById('successMessage').style.display = 'block';
-            document.getElementById("descarga_parrafo").style.display = "block";
-            showSuccessTable();
-            document.getElementById('downloadButton').style.display = 'inline-block';
-        });
+// JavaScript para generar las filas de la tabla según el número de puntos
+document.getElementById('dataForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    if (isGraphGenerated) return;
 
-        // JavaScript para agregar nuevas filas al presionar Enter en los campos de entrada
-        document.getElementById('dataForm').addEventListener('keydown', function(event) {
-            if (isGraphGenerated || event.key !== 'Enter') return;
-            
-            event.preventDefault();
-            var numPoints = document.getElementById('dataInputs').getElementsByTagName('tr').length;
-            createDataRow(numPoints + 1);
-            toggleBotonEliminar();
-        });
+    isGraphGenerated = true;
+    document.getElementById('submitButton').disabled = true;
+    document.getElementById('successMessage').style.display = 'block';
+    document.getElementById("descarga_parrafo").style.display = "block";
+    showSuccessTable();
+    document.getElementById('downloadButton').style.display = 'inline-block';
+});
 
-        function toggleBotonEliminar() {
-      var numFilas = document.getElementById('dataInputs').getElementsByTagName('tr').length;
-      var botonEliminar = document.getElementById('botonEliminar');
-      
-      if (numFilas > 1) {
-        botonEliminar.style.display = 'block';
-      } else {
-        botonEliminar.style.display = 'none';
-      }
-    }
+// JavaScript para agregar nuevas filas al presionar Enter en los campos de entrada
+document.getElementById('dataForm').addEventListener('keydown', function(event) {
+    if (isGraphGenerated || event.key !== 'Enter') return;
 
-    function eliminarFila() {
+    event.preventDefault();
+    var numPoints = document.getElementById('dataInputs').getElementsByTagName('tr').length;
+    createDataRow(numPoints + 1);
+    toggleBotonEliminar();
+});
+    
+function toggleBotonEliminar() {
+  var numFilas = document.getElementById('dataInputs').getElementsByTagName('tr').length;
+  var botonEliminar = document.getElementById('botonEliminar');
+
+  if (numFilas > 1) {
+    botonEliminar.style.display = 'block';
+  } else {
+    botonEliminar.style.display = 'none';
+  }
+}
+
+function eliminarFila() {
   var table = document.getElementById('dataInputs');
   var numRows = table.rows.length;
   
@@ -144,37 +143,33 @@
     toggleBotonEliminar();
   }
 }
-
-
-
         
-        function createDataRow(rowNum) {
-            var tableBody = document.getElementById('dataInputs');
-            var row = document.createElement('tr');
-            
-            var cellX = document.createElement('td');
-            var inputX = document.createElement('input');
-            inputX.type = 'number';
-            inputX.name = 'x' + rowNum;
-            inputX.step = 'any'; // Permite valores decimales
-            inputX.required = true;
-            cellX.appendChild(inputX);
-            
-            var cellY = document.createElement('td');
-            var inputY = document.createElement('input');
-            inputY.type = 'number';
-            inputY.name = 'y' + rowNum;
-            inputY.step = 'any';
-            inputY.required = true;
-            cellY.appendChild(inputY);
-            
-            row.appendChild(cellX);
-            row.appendChild(cellY);
-            
-            tableBody.appendChild(row);
-        }
+function createDataRow(rowNum) {
+    var tableBody = document.getElementById('dataInputs');
+    var row = document.createElement('tr');
+
+    var cellX = document.createElement('td');
+    var inputX = document.createElement('input');
+    inputX.type = 'number';
+    inputX.name = 'x' + rowNum;
+    inputX.step = 'any'; // Permite valores decimales
+    inputX.required = true;
+    cellX.appendChild(inputX);
+
+    var cellY = document.createElement('td');
+    var inputY = document.createElement('input');
+    inputY.type = 'number';
+    inputY.name = 'y' + rowNum;
+    inputY.step = 'any';
+    inputY.required = true;
+    cellY.appendChild(inputY);
+
+    row.appendChild(cellX);
+    row.appendChild(cellY);
+
+    tableBody.appendChild(row);
+}
         
-        // Mostrar la tabla con los puntos ingresados en el mensaje de éxito
 function showSuccessTable() {
     var xValues = [];
     var yValues = [];
@@ -334,6 +329,7 @@ function plotLine() {
 }
 
 </script>
+<button onclick="location.reload();" class="btn btn-primary">Reiniciar</button>
 <p></p>
 <p class='centered'>(c)2023 - fisicamaldonado.wordpress.com - Prof. Pablo Vaz</p>
 <p class='centered'>Maldonado - Uruguay</p>
