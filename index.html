@@ -283,13 +283,13 @@ function plotLine() {
     var yEnd = chartCanvas.height - margin - (points[points.length - 1].y / maxY) * (chartCanvas.height - margin * 2);
 
     // Cálculo de los coeficientes de la función lineal asociada a la línea
-    var x = points.map(point => point.x);
+    var x = points.map(point => point.x);//Extrae las coordenadas de cada punto en el array 'points' y las almacena en los arrays x e y, respectivamente.
     var y = points.map(point => point.y);
-    var sumX = x.reduce((a, b) => a + b, 0);
+    var sumX = x.reduce((a, b) => a + b, 0);//Calcula la suma de todos los valores en x y y.
     var sumY = y.reduce((a, b) => a + b, 0);
-    var sumXY = x.map((value, index) => value * y[index]).reduce((a, b) => a + b, 0);
-    var sumXSquared = x.map(value => value * value).reduce((a, b) => a + b, 0);
-    var numPoints = points.length;
+    var sumXY = x.map((value, index) => value * y[index]).reduce((a, b) => a + b, 0);//Calcula la suma de los productos de cada elemento en x y su correspondiente elemento en y.
+    var sumXSquared = x.map(value => value * value).reduce((a, b) => a + b, 0);//Calcula la suma de los cuadrados de los valores en x.
+    var numPoints = points.length;//Determina el número de puntos disponibles
 
     var m = (numPoints * sumXY - sumX * sumY) / (numPoints * sumXSquared - sumX * sumX);
     var n = (sumY - m * sumX) / numPoints;
@@ -297,6 +297,16 @@ function plotLine() {
     m = parseFloat(m.toFixed(3));
     n = parseFloat(n.toFixed(3));
 
+    var chartWidth = chartCanvas.width - margin * 2;
+    var chartHeight = chartCanvas.height - margin * 2;
+
+    // Calcular las coordenadas de inicio y fin de la línea de tendencia dentro del margen
+    var xStart = margin;
+    var yStart = chartCanvas.height - margin - (n / maxY) * chartHeight;
+    var xEnd = margin + chartWidth;
+    var yEnd = chartCanvas.height - margin - ((m * maxX + n) / maxY) * chartHeight;
+
+    // Dibujar la línea de tendencia dentro del margen
     ctx.beginPath();
     ctx.moveTo(xStart, yStart);
     ctx.lineTo(xEnd, yEnd);
