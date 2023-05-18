@@ -31,7 +31,7 @@
     </table>
     </div>
     <div>
-      <button type="button" id="botonEliminar" onclick="eliminarFila()" class="btn btn-primary" style="display: none;">Delete file</button>
+      <button type="button" id="botonEliminar" onclick="eliminarFila()" class="btn btn-primary" style="display: none;">Delete Row</button>
     </div>
   <button type="submit" id="submitButton" class="btn btn-primary">Confirm Data</button>
 </form>
@@ -60,9 +60,9 @@ var successTable = document.getElementById('successTable');
 var chartCanvas = document.getElementById('chartCanvas');
 var ctx = chartCanvas.getContext('2d');
 var points = [];
-createDataRow(1);// Crear una fila inicial al cargar la página
+createDataRow(1);// Create 1 Row when the App starts
 
-// Generar las filas de la tabla y desabilitar el botón "Confirmar datos" al presionarlo
+// Generate the verification table and disable "Confirma Data" Button
 document.getElementById('dataForm').addEventListener('submit', function(event) {
     event.preventDefault();
     if (isGraphGenerated) return;
@@ -75,7 +75,7 @@ document.getElementById('dataForm').addEventListener('submit', function(event) {
     document.getElementById('downloadButton').style.display = 'inline-block';
 });
 
-// Agregar nuevas filas al presionar Enter en los campos de entrada
+// New Rows when "Enter" is pressed
 document.getElementById('dataForm').addEventListener('keydown', function(event) {
     if (isGraphGenerated || event.key !== 'Enter') return;
 
@@ -85,7 +85,7 @@ document.getElementById('dataForm').addEventListener('keydown', function(event) 
     toggleBotonEliminar();
 });
 
-//El botón de eliminar filas solo será visible cuando éstas sean mayores a 1
+//The "Delete Row" button is shown only when Rows > 1
 function toggleBotonEliminar() {
   var numFilas = document.getElementById('dataInputs').getElementsByTagName('tr').length;
   var botonEliminar = document.getElementById('botonEliminar');
@@ -107,7 +107,7 @@ function eliminarFila() {
   }
 }
 
-//Crear filas de la tabla de entrada
+//Create Rows
 function createDataRow(rowNum) {
     var tableBody = document.getElementById('dataInputs');
     var row = document.createElement('tr');
@@ -115,7 +115,7 @@ function createDataRow(rowNum) {
     var inputX = document.createElement('input');
     inputX.type = 'number';
     inputX.name = 'x' + rowNum;
-    inputX.step = 'any'; // Permite valores decimales
+    inputX.step = 'any'; // Allow decimal values
     inputX.required = true;
     cellX.appendChild(inputX);
 
@@ -161,7 +161,7 @@ function showSuccessTable() {
 
     successTable.style.display = 'table';
     }
- // Descargar los puntos como un archivo TXT
+ // Download TXT file
 function downloadData() {
   var xValues = [];
   var yValues = [];
@@ -193,16 +193,14 @@ function downloadData() {
   document.body.removeChild(link);
 }
 
-// Dibujar el gráfico con los puntos
+// Plot the Chart and the Data points
 function drawChart() {
     console.log(points);
     ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
-
-    // Dibujar los ejes x e y
     var maxX = Math.max(...points.map(point => point.x));
     var maxY = Math.max(...points.map(point => point.y));
 
-    // Margen para ajustar la posición de los puntos y los ejes
+    // Margin
     var margin = 40;
 
     ctx.beginPath();
@@ -212,7 +210,7 @@ function drawChart() {
     ctx.lineTo(chartCanvas.width - margin, chartCanvas.height - margin);
     ctx.stroke();
 
-    // Dibujar los puntos
+    // Plot the points
     for (var j = 0; j < points.length; j++) {
         var xCoord = margin + (points[j].x / maxX) * (chartCanvas.width - margin * 2);
         var yCoord = chartCanvas.height - margin - (points[j].y / maxY) * (chartCanvas.height - margin * 2);
@@ -224,7 +222,7 @@ function drawChart() {
         ctx.stroke();
     }
   
-    // Agregar los ejes con los datos
+    // Add the XY Axis
     ctx.font = '12px Arial';
     ctx.textAlign = 'end';
     ctx.fillText('0', margin - 5, chartCanvas.height - margin + 15);
@@ -233,14 +231,13 @@ function drawChart() {
     ctx.fillText('y_max: ' + maxY, margin, margin - 5);
 }
 function plotLine() {
-  // Dibujar los ejes x e y
   var maxX = Math.max(...points.map(point => point.x));
   var maxY = Math.max(...points.map(point => point.y));
 
-  // Margen para ajustar la posición de los puntos y los ejes
+  // Margin
   var margin = 36;
   if (points.length >= 2) {
-    // Cálculo de los coeficientes de la función lineal asociada a la línea
+    // Trend line coeficients
     var x = points.map(point => point.x);//Extrae las coordenadas de cada punto en el array 'points' y las almacena en los arrays x e y, respectivamente.
     var y = points.map(point => point.y);
     var sumX = x.reduce((a, b) => a + b, 0);//Calcula la suma de todos los valores en x y y.
@@ -258,13 +255,13 @@ function plotLine() {
     var chartWidth = chartCanvas.width - margin * 2;
     var chartHeight = chartCanvas.height - margin * 2;
 
-    // Calcular las coordenadas de inicio y fin de la línea de tendencia dentro del margen
+    // Calculate the Trend line coordinates for the start and end
     var xStart = margin;
     var yStart = chartCanvas.height - margin - (n / maxY) * chartHeight;
     var xEnd = margin + chartWidth;
     var yEnd = chartCanvas.height - margin - ((m * maxX + n) / maxY) * chartHeight;
 
-    // Dibujar la línea de tendencia dentro del margen
+    // Plot the Trend line
     ctx.beginPath();
     ctx.moveTo(xStart, yStart);
     ctx.lineTo(xEnd, yEnd);
@@ -272,7 +269,7 @@ function plotLine() {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Presentar la función lineal
+    // Show the linear function
     var linealFunctionText = "The linear function is: y = " + m + "x + " + n;
     var linealFunctionElement = document.getElementById("linealFunction");
     linealFunctionElement.textContent = linealFunctionText;
