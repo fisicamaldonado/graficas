@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Plots XY - Gráficas para el laboratorio de Ciencias</title>
+    <title>Plots XY - Science Lab</title>
     <meta name="description" content="Plots XY ofrece gráficos interactivos y herramientas de visualización para análisis de datos. Ideal para prácticas de ciencias en Secundaria y primeros años universitarios.">
     <meta name="google-site-verification" content="1psBQTzJBgx9fHWgpllgWjbrcEWHsjlsgn5J0C7KF_4" />
     <meta charset="UTF-8">
@@ -10,47 +10,46 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h1>Gráficas XY</h1>
-<h2>Laboratorio de Ciencias</h2>
+<h1>Plots XY</h1>
+<h2>Sience Lab</h2>
 <div style="text-align: right;">
-  <button type="button" class="btn btn-primary" onclick="window.location.href='english.html'">EN</button>
-</div>
-
-<h3>Instrucciones</h3>
-<p>Ingrese los datos x e y en la tabla presionando "Enter" para generar más filas. Al finalizar pulse el botón "Confirmar datos" para verificar y graficar los datos ingresados. Luego podrá descargarlos como un archivo "datos.txt".</p>
-<p>[Importante] Por el momento la aplicación solo soporta entradas (x,y) positivas y ajuste lineal, lo que será útil para bosquejar gráficos en la mayoría de los experimentos en el laboratorio de Ciencias. </p>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='index.html'">ES</button>
+  </div>
+<h3>How it works?</h3>
+<p>Please enter the x and y data into the table by pressing "Enter" to generate more rows. When finished, click the "Confirm Data" button to verify and plot the entered data. You can then download it as a "data.txt" file.</p>
+<p>[Important] Currently, the application only supports positive (x,y) inputs and linear regression, which will be useful for sketching graphs in most Science laboratory experiments. </p>
 <form id="dataForm">
     <div id="tableContainer">
     <table>
         <thead>
             <tr>
-                <th>Dato X</th>
-                <th>Dato Y</th>
+                <th>Data X</th>
+                <th>Data Y</th>
             </tr>
         </thead>
         <tbody id="dataInputs"></tbody>
     </table>
     </div>
     <div>
-      <button type="button" id="botonEliminar" onclick="eliminarFila()" class="btn btn-primary" style="display: none;">Eliminar datos</button>
+      <button type="button" id="botonEliminar" onclick="eliminarFila()" class="btn btn-primary" style="display: none;">Delete file</button>
     </div>
-  <button type="submit" id="submitButton" class="btn btn-primary">Confirmar datos</button>
+  <button type="submit" id="submitButton" class="btn btn-primary">Confirm Data</button>
 </form>
     
 <div class="mt-4">
-    <p id="successMessage" style="display: none;">Puntos ingresados con éxito! Verifique que los datos son correctos.</p>
+    <p id="successMessage" style="display: none;">Points entered successfully! Please verify that the data is correct.</p>
     <table id="successTable" class="table table-bordered" style="display: none;"></table>
 </div>
 <div class="container">
 <canvas id="chartCanvas" width="360" height="360"></canvas>
 </div>
-<button type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary" style="display: none;">Línea de tendencia</button>
+<button type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary" style="display: none;">Trend Line</button>
 <p></p>
 <p id ='linealFunction' style = "display: none;">linealFunctionText</p>
 
-<p id="descarga_parrafo" style="display: none;">Si lo desea presione el botón "Descargar datos" para guardar el archivo "datos.txt".</p>
-<button type="button" id="downloadButton" onclick="downloadData()" class="btn btn-primary" style="display: none;">Descargar datos</button>
-<button onclick="location.reload();" class="btn btn-primary">Reiniciar</button>
+<p id="descarga_parrafo" style="display: none;">If desired, click the "Download Data" button to save the "data.txt" file.</p>
+<button type="button" id="downloadButton" onclick="downloadData()" class="btn btn-primary" style="display: none;">Download Data</button>
+<button onclick="location.reload();" class="btn btn-primary">Reset</button>
 <p></p>
 <p class='centered'>(c)2023 - Prof. Pablo Vaz</p>
 <a href="https://fisicamaldonado.wordpress.com" target="_blank"><p class='centered'>fisicamaldonado.wordpress.com</p></a>
@@ -188,7 +187,7 @@ function downloadData() {
 
   var link = document.createElement('a');
   link.href = url;
-  link.download = 'datos.txt';
+  link.download = 'data.txt';
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -274,7 +273,7 @@ function plotLine() {
     ctx.stroke();
 
     // Presentar la función lineal
-    var linealFunctionText = "La función lineal es: y = " + m + "x + " + n;
+    var linealFunctionText = "The linear function is: y = " + m + "x + " + n;
     var linealFunctionElement = document.getElementById("linealFunction");
     linealFunctionElement.textContent = linealFunctionText;
     linealFunctionElement.style.display = "block";
