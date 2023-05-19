@@ -10,15 +10,15 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h1>Gráficas XY</h1>
-<h2>Laboratorio de Ciencias</h2>
+<h1 style="font-weight:bold; color: rgb(43, 43, 43);">PLOTS XY</h1>
+<h2>Gráficas para el Laboratorio de Ciencias</h2>
 <div style="text-align: right;">
   <button type="button" class="btn btn-primary" onclick="window.location.href='english.html'">EN</button>
 </div>
 
 <h3>Instrucciones</h3>
 <p>Ingrese los datos x e y en la tabla presionando "Enter" para generar más filas. Al finalizar pulse el botón "Confirmar datos" para verificar y graficar los datos ingresados. Luego podrá descargarlos como un archivo "datos.txt".</p>
-<p>[Importante] Por el momento la aplicación solo soporta entradas (x,y) positivas y ajuste lineal, lo que será útil para bosquejar gráficos en la mayoría de los experimentos en el laboratorio de Ciencias. </p>
+<p>[Importante] Por el momento la aplicación solo soporta entradas (x,y) positivas, curva de ajuste lineal (por regresión) y polinómica (grado 2), lo que será útil para bosquejar gráficos en la mayoría de los experimentos en el laboratorio de Ciencias. </p>
 <form id="dataForm">
   <div id="tableContainerLabels">
     <table>
@@ -36,7 +36,7 @@
       </tbody>
     </table>
   </div>
-  <button type="button" onclick="asignarEjes()" class="btn btn-primary">Asignar ejes</button>
+  <button id= "axisButton" type="button" onclick="asignarEjes()" class="btn btn-primary">Asignar ejes</button>
   <p></p> 
   <div id="tableContainer">
     <table>
@@ -56,7 +56,7 @@
 </form>
     
 <div class="mt-4">
-    <p id="successMessage" style="display: none;">Puntos ingresados con éxito! Verifique que los datos son correctos.</p>
+    <p id="successMessage" style="display: none;">Puntos ingresados con éxito! Verifique que los datos son correctos en la siguiente tabla.</p>
     <table id="successTable" class="table table-bordered" style="display: none;"></table>
 </div>
 <div class="container">
@@ -65,7 +65,7 @@
 <button type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary" style="display: none;">Línea de tendencia</button>
 <button  id="trendButton" onclick="NotLinearTrend()" class="btn btn-primary" style="display: none;">Curva Suave</button>
 <p></p>
-<p id ='linealFunction' style = "display: none;">linealFunctionText</p>
+<p id="textFunction" style="display: none;">La función lineal es: </p><p style="font-family: Consolas; display: none;" id ="linealFunction">linealFunctionText</p>
 
 <p id="descarga_parrafo" style="display: none;">Si lo desea presione el botón "Descargar datos" para guardar el archivo "datos.txt".</p>
 <button type="button" id="downloadButton" onclick="downloadData()" class="btn btn-primary" style="display: none;">Descargar datos</button>
@@ -95,7 +95,10 @@ document.getElementById('dataForm').addEventListener('submit', function(event) {
 
     isGraphGenerated = true;
     document.getElementById('submitButton').disabled = true;
-    document.getElementById('botonEliminar').disabled = true;
+    document.getElementById('botonEliminar').style.display = 'none';
+    document.getElementById('axisButton').style.display = 'none';
+    document.getElementById('tableContainerLabels').style.display = 'none';
+    document.getElementById('tableContainer').style.display = 'none';
     document.getElementById('successMessage').style.display = 'block';
     document.getElementById("descarga_parrafo").style.display = "block";
     showSuccessTable();
@@ -175,6 +178,11 @@ function showSuccessTable() {
     var rows = document.getElementById('dataInputs').getElementsByTagName('tr');
     var tableBody = successTable.createTBody();
 
+    // Crear la primera fila de la tabla
+    var firstRow = tableBody.insertRow(0);
+    firstRow.insertCell(0).textContent = labelX;
+    firstRow.insertCell(1).textContent = labelY;
+
     for (var i = 0; i < rows.length; i++) {
         var row = rows[i];
         var xValue = row.cells[0].querySelector('input').value;
@@ -182,18 +190,14 @@ function showSuccessTable() {
         xValues.push(xValue);
         yValues.push(yValue);
 
-        var newRow = tableBody.insertRow(i);
+        var newRow = tableBody.insertRow(i + 1); // Comenzar desde la segunda fila
         newRow.insertCell(0).textContent = xValue;
         newRow.insertCell(1).textContent = yValue;
 
         points.push({ x: parseFloat(xValue), y: parseFloat(yValue) });
         document.getElementById('lineButton').style.display = 'inline-block';
-
-
     }
-
     drawChart();
-
     successTable.style.display = 'table';
     }
  // Descargar los puntos como un archivo TXT
@@ -331,16 +335,21 @@ function plotLine() {
     ctx.stroke();
 
     // Presentar la función lineal
+    
+    var labelX_clean = labelX.slice(0, labelX.indexOf('('));//quita paréntesis de cualquier etiqueta para remover la unidad y dejar solo la magnitud.
+    var labelY_clean = labelY.slice(0, labelY.indexOf('('));
     if (n >= 0){
-    var linealFunctionText = "La función lineal es: " + labelY + " = " + m + labelX + " + " + n;
+      var linealFunctionText = "  " + labelY_clean + " = " + m + "*" + labelX_clean + " + " + n;
     }
     else{
-    var linealFunctionText = "La función lineal es: " + labelY + " = " + m + labelX + " - " + Math.abs(n); 
+    var linealFunctionText = "  " + labelY_clean + " = " + m + "*"+labelX_clean + " - " + Math.abs(n); 
     }
     var linealFunctionElement = document.getElementById("linealFunction");
     linealFunctionElement.textContent = linealFunctionText;
-    linealFunctionElement.style.display = "block";
+    linealFunctionElement.style.display = "inline-block";
+    document.getElementById("textFunction").style.display = "inline-block";
   }
+  
   document.getElementById('lineButton').disabled = true;
 }
 
