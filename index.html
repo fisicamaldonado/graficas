@@ -45,6 +45,7 @@
 <canvas id="chartCanvas" width="360" height="360"></canvas>
 </div>
 <button type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary" style="display: none;">Línea de tendencia</button>
+<button  id="trendButton" onclick="NotLinearTrend()" class="btn btn-primary" style="display: none;">Curva Suave</button>
 <p></p>
 <p id ='linealFunction' style = "display: none;">linealFunctionText</p>
 
@@ -56,6 +57,10 @@
 <a href="https://fisicamaldonado.wordpress.com" target="_blank"><p class='centered'>fisicamaldonado.wordpress.com</p></a>
 <p class='centered'>Maldonado - Uruguay</p>    
 <script>
+var margin = 36;
+var maxX;
+var maxY;
+var points;
 var isGraphGenerated = false;
 var successTable = document.getElementById('successTable');
 var chartCanvas = document.getElementById('chartCanvas');
@@ -70,10 +75,12 @@ document.getElementById('dataForm').addEventListener('submit', function(event) {
 
     isGraphGenerated = true;
     document.getElementById('submitButton').disabled = true;
+    document.getElementById('botonEliminar').disabled = true;
     document.getElementById('successMessage').style.display = 'block';
     document.getElementById("descarga_parrafo").style.display = "block";
     showSuccessTable();
     document.getElementById('downloadButton').style.display = 'inline-block';
+    document.getElementById('trendButton').style.display = 'inline-block';
 });
 
 // Agregar nuevas filas al presionar Enter en los campos de entrada
@@ -154,7 +161,8 @@ function showSuccessTable() {
         newRow.insertCell(1).textContent = yValue;
 
         points.push({ x: parseFloat(xValue), y: parseFloat(yValue) });
-        document.getElementById('lineButton').style.display = 'block';
+        document.getElementById('lineButton').style.display = 'inline-block';
+
 
     }
 
@@ -199,18 +207,40 @@ function drawChart() {
     console.log(points);
     ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
 
-    // Dibujar los ejes x e y
     var maxX = Math.max(...points.map(point => point.x));
     var maxY = Math.max(...points.map(point => point.y));
-
-    // Margen para ajustar la posición de los puntos y los ejes
-    var margin = 40;
 
     ctx.beginPath();
     ctx.moveTo(margin, chartCanvas.height - margin);
     ctx.lineTo(margin, margin);
+    ctx.lineTo(margin - 5, margin + 10); // Flecha en la punta del eje y
+    ctx.moveTo(margin, margin);
+    ctx.lineTo(margin + 5, margin + 10); // Flecha en la punta del eje y
     ctx.moveTo(margin, chartCanvas.height - margin);
     ctx.lineTo(chartCanvas.width - margin, chartCanvas.height - margin);
+    ctx.lineTo(chartCanvas.width - margin - 10, chartCanvas.height - margin - 5); // Flecha en la punta del eje x
+    ctx.moveTo(chartCanvas.width - margin, chartCanvas.height - margin);
+    ctx.lineTo(chartCanvas.width - margin - 10, chartCanvas.height - margin + 5); // Flecha en la punta del eje x
+
+    // Dividir cada eje en 4 partes
+    var segmentLengthX = (chartCanvas.width - margin * 2) / 4;
+    var segmentLengthY = (chartCanvas.height - margin * 2) / 4;
+
+    for (var i = 1; i <= 4; i++) {
+        var divisionX = maxX * i / 4;
+        var divisionY = maxY * i / 4;
+
+        ctx.moveTo(margin + i * segmentLengthX, chartCanvas.height - margin - 5);
+        ctx.lineTo(margin + i * segmentLengthX, chartCanvas.height - margin + 5);
+        ctx.moveTo(margin - 5, chartCanvas.height - margin - i * segmentLengthY);
+        ctx.lineTo(margin + 5, chartCanvas.height - margin - i * segmentLengthY);
+
+        ctx.font = '10px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(divisionX.toFixed(2), margin + i * segmentLengthX, chartCanvas.height - margin + 15);
+        ctx.fillText(divisionY.toFixed(2), margin - 15, chartCanvas.height - margin - i * segmentLengthY);
+    }
+
     ctx.stroke();
 
     // Dibujar los puntos
@@ -228,18 +258,19 @@ function drawChart() {
     // Agregar los ejes con los datos
     ctx.font = '12px Arial';
     ctx.textAlign = 'end';
+    ctx.fillStyle = 'black';
     ctx.fillText('0', margin - 5, chartCanvas.height - margin + 15);
-    ctx.fillText('x_max: ' + maxX, chartCanvas.width - margin, chartCanvas.height - margin + 15);
+    ctx.fillText('x', chartCanvas.width - margin/3, chartCanvas.height - margin/3);
     ctx.textAlign = 'start';
-    ctx.fillText('y_max: ' + maxY, margin, margin - 5);
+    ctx.fillText('y', margin/2, margin/2);
 }
+
+
 function plotLine() {
-  // Dibujar los ejes x e y
   var maxX = Math.max(...points.map(point => point.x));
   var maxY = Math.max(...points.map(point => point.y));
 
-  // Margen para ajustar la posición de los puntos y los ejes
-  var margin = 36;
+
   if (points.length >= 2) {
     // Cálculo de los coeficientes de la función lineal asociada a la línea
     var x = points.map(point => point.x);//Extrae las coordenadas de cada punto en el array 'points' y las almacena en los arrays x e y, respectivamente.
@@ -253,8 +284,8 @@ function plotLine() {
     var m = (numPoints * sumXY - sumX * sumY) / (numPoints * sumXSquared - sumX * sumX);
     var n = (sumY - m * sumX) / numPoints;
 
-    m = parseFloat(m.toFixed(3));
-    n = parseFloat(n.toFixed(3));
+    m = parseFloat(m.toFixed(4));
+    n = parseFloat(n.toFixed(2));
 
     var chartWidth = chartCanvas.width - margin * 2;
     var chartHeight = chartCanvas.height - margin * 2;
@@ -274,12 +305,149 @@ function plotLine() {
     ctx.stroke();
 
     // Presentar la función lineal
+    if (n >= 0){
     var linealFunctionText = "La función lineal es: y = " + m + "x + " + n;
+    }
+    else{
+    var linealFunctionText = "La función lineal es: y = " + m + "x - " + Math.abs(n); 
+    }
     var linealFunctionElement = document.getElementById("linealFunction");
     linealFunctionElement.textContent = linealFunctionText;
     linealFunctionElement.style.display = "block";
   }
+  document.getElementById('lineButton').disabled = true;
 }
+
+// Función de ajuste de curva suave (No Lineal)
+function NotLinearTrend() {
+  if (points.length >= 3) {
+    // Obtener las coordenadas x e y de los puntos
+    var x = points.map(point => point.x);
+    var y = points.map(point => point.y);
+    var maxX = Math.max(...points.map(point => point.x));
+
+    // Calcular los coeficientes del polinomio de segundo grado (a, b, c)
+    var coefficients = quadraticRegression(x, y);
+
+    // Imprimir los coeficientes encontrados
+    console.log("Coeficiente a:", coefficients.a);
+    console.log("Coeficiente b:", coefficients.b);
+    console.log("Coeficiente c:", coefficients.c);
+    drawQuadraticCurve(coefficients);// Dibujar la parábola suave en el gráfico
+    document.getElementById('trendButton').disabled = true;
+  }
+  
+  
+}
+
+// Función de regresión cuadrática para encontrar los coeficientes a, b y c
+function quadraticRegression(x, y) {
+  var n = x.length;
+  var sumX = 0;
+  var sumX2 = 0;
+  var sumX3 = 0;
+  var sumX4 = 0;
+  var sumY = 0;
+  var sumXY = 0;
+  var sumX2Y = 0;
+
+  for (var i = 0; i < n; i++) {
+    sumX += x[i];
+    sumX2 += Math.pow(x[i], 2);
+    sumX3 += Math.pow(x[i], 3);
+    sumX4 += Math.pow(x[i], 4);
+    sumY += y[i]; 
+    sumXY += x[i] * y[i];
+    sumX2Y += Math.pow(x[i], 2) * y[i];
+  }
+
+  // Solución del sistema de ecuaciones
+  var matrix = [
+    [n, sumX, sumX2, sumY],
+    [sumX, sumX2, sumX3, sumXY],
+    [sumX2, sumX3, sumX4, sumX2Y]
+  ];
+
+  var coefficients = gaussianElimination(matrix);
+
+  return {
+    a: coefficients[0],
+    b: coefficients[1],
+    c: coefficients[2]
+  };
+}
+
+// Función de eliminación gaussiana para resolver sistemas de ecuaciones lineales
+function gaussianElimination(matrix) {
+  var n = matrix.length;
+
+  for (var i = 0; i < n; i++) {
+    // Buscar el pivote máximo en la columna actual
+    var maxRow = i;
+    for (var j = i + 1; j < n; j++) {
+      if (Math.abs(matrix[j][i]) > Math.abs(matrix[maxRow][i])) {
+        maxRow = j;
+      }
+    }
+
+    // Intercambiar filas
+    var temp = matrix[i];
+    matrix[i] = matrix[maxRow];
+    matrix[maxRow] = temp;
+
+    // Hacer ceros debajo del pivote
+    for (var k = i + 1; k < n; k++) {
+      var factor = matrix[k][i] / matrix[i][i];
+      for (var j = i + 1; j <= n; j++) {
+        matrix[k][j] -= factor * matrix[i][j];
+      }
+    }
+  }
+
+  // Resolver el sistema de ecuaciones
+var coefficients = new Array(n);
+for (var i = n - 1; i >= 0; i--) {
+coefficients[i] = matrix[i][n];
+for (var j = i + 1; j < n; j++) {
+coefficients[i] -= matrix[i][j] * coefficients[j];
+}
+coefficients[i] /= matrix[i][i];
+}
+
+return coefficients;
+}
+function drawQuadraticCurve(coefficients) {
+
+  var maxX = Math.max(...points.map(point => point.x));
+  var maxY = Math.max(...points.map(point => point.y));
+  console.log("maxX = " + maxX + " max Y = " + maxY);
+  var chartWidth = chartCanvas.width - margin * 2;
+  var chartHeight = chartCanvas.height - margin * 2;
+  console.log("chartHeight = "+chartHeight);
+  ctx.beginPath();
+  ctx.moveTo(margin, chartCanvas.height - margin - (points[0].y / maxY) * chartHeight);
+
+  var step = maxX / 100; // Ajustar el número de puntos para una curva más suave
+
+  for (var x = 0; x <= maxX; x += step) {
+    var y = evaluateQuadraticPolynomial(coefficients, x);
+    var xCoord = margin + (x / maxX) * chartWidth;
+    var yCoord = chartCanvas.height - margin - (y / maxY) * chartHeight;
+    ctx.lineTo(xCoord, yCoord);
+    console.log("xCoord = " + xCoord + " yCoord = " + yCoord);
+  }
+    ctx.strokeStyle = 'blue';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  
+}
+
+// Función para evaluar un polinomio cuadrático dado los coeficientes y el valor de x
+function evaluateQuadraticPolynomial(coefficients, x) {
+  var result = coefficients.a + coefficients.b * x + coefficients.c * Math.pow(x, 2);
+  return result;
+}
+
 </script>
 </body>
 </html>
