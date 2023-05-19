@@ -20,13 +20,31 @@
 <p>Ingrese los datos x e y en la tabla presionando "Enter" para generar más filas. Al finalizar pulse el botón "Confirmar datos" para verificar y graficar los datos ingresados. Luego podrá descargarlos como un archivo "datos.txt".</p>
 <p>[Importante] Por el momento la aplicación solo soporta entradas (x,y) positivas y ajuste lineal, lo que será útil para bosquejar gráficos en la mayoría de los experimentos en el laboratorio de Ciencias. </p>
 <form id="dataForm">
-    <div id="tableContainer">
+  <div id="tableContainerLabels">
+    <table>
+      <thead>
+        <tr>
+          <th class="centered">Etiqueta eje X</th>
+          <th class="centered">Etiqueta eje Y</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="text" id="labelX" name="labelX"></td>
+          <td><input type="text" id="labelY" name="labelY"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button type="button" onclick="asignarEjes()" class="btn btn-primary">Asignar ejes</button>
+  <p></p> 
+  <div id="tableContainer">
     <table>
         <thead>
-            <tr>
-                <th>Dato X</th>
-                <th>Dato Y</th>
-            </tr>
+          <tr>
+            <th id="tablaEncabezadoX" class="centered">Dato X</th>
+            <th id="tablaEncabezadoY" class="centered">Dato Y</th>
+        </tr>
         </thead>
         <tbody id="dataInputs"></tbody>
     </table>
@@ -57,6 +75,8 @@
 <a href="https://fisicamaldonado.wordpress.com" target="_blank"><p class='centered'>fisicamaldonado.wordpress.com</p></a>
 <p class='centered'>Maldonado - Uruguay</p>    
 <script>
+var labelX = 'x';
+var labelY = 'y';
 var margin = 36;
 var maxX;
 var maxY;
@@ -92,6 +112,12 @@ document.getElementById('dataForm').addEventListener('keydown', function(event) 
     createDataRow(numPoints + 1);
     toggleBotonEliminar();
 });
+function asignarEjes() {
+  labelX = document.getElementById('labelX').value;
+  labelY = document.getElementById('labelY').value;
+  document.getElementById('tablaEncabezadoX').innerText = labelX;
+  document.getElementById('tablaEncabezadoY').innerText = labelY;
+}
 
 //El botón de eliminar filas solo será visible cuando éstas sean mayores a 1
 function toggleBotonEliminar() {
@@ -185,7 +211,7 @@ function downloadData() {
     yValues.push(yValue);
   }
 
-  var data = "X Values\tY Values\n";
+  var data = "X: "+ labelX +"Y: "+ labelY+"\n";
 
   for (var j = 0; j < xValues.length; j++) {
     data += xValues[j] + "\t" + yValues[j] + "\n";
@@ -260,9 +286,9 @@ function drawChart() {
     ctx.textAlign = 'end';
     ctx.fillStyle = 'black';
     ctx.fillText('0', margin - 5, chartCanvas.height - margin + 15);
-    ctx.fillText('x', chartCanvas.width - margin/3, chartCanvas.height - margin/3);
+    ctx.fillText(labelX, chartCanvas.width - margin/2, chartCanvas.height - margin/4);
     ctx.textAlign = 'start';
-    ctx.fillText('y', margin/2, margin/2);
+    ctx.fillText(labelY, margin/2, margin/2);
 }
 
 
@@ -306,10 +332,10 @@ function plotLine() {
 
     // Presentar la función lineal
     if (n >= 0){
-    var linealFunctionText = "La función lineal es: y = " + m + "x + " + n;
+    var linealFunctionText = "La función lineal es: " + labelY + " = " + m + labelX + " + " + n;
     }
     else{
-    var linealFunctionText = "La función lineal es: y = " + m + "x - " + Math.abs(n); 
+    var linealFunctionText = "La función lineal es: " + labelY + " = " + m + labelX + " - " + Math.abs(n); 
     }
     var linealFunctionElement = document.getElementById("linealFunction");
     linealFunctionElement.textContent = linealFunctionText;
