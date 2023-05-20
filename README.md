@@ -2,15 +2,16 @@
 
 (Descripción en español más abajo).
 
-The Plots XY app allows users to create sketches of XY graphs based on provided data. It also provides the ability to add trend lines (Linear and Polynomial) and download the data in TXT format.
+The Plots XY app allows users to create sketches of XY graphs based on provided data. It also provides the ability to add trend lines (Linear, Polynomial, Exponential) and download the data in TXT format.
+
 **Please note that this project is currently under construction, and there are many more functionalities planned to be added in the future.**
 
 ## Features
 
 - Create XY graphs: Input your data points and visualize them on a graph.
 - Set labels for each axis.
-- Add trend lines: Use linear regression to calculate and display trend lines on the graph and the linear function associated.
-- Add soft polynomial curve using polynomial regression.
+- Add trend lines: Linear, Polynomial and Exponential Trend curves.
+- Trend equations are shown.
 - Download data: Save your data in TXT format for further analysis or sharing.
 
 
@@ -19,9 +20,9 @@ The Plots XY app allows users to create sketches of XY graphs based on provided 
 1. Open the app in any web browser: [Plots XY](https://fisicamaldonado.github.io/graficas/english.html)
 2. Input the X and Y Axis labels and click assign labels.
 3. Input your data points in the provided form fields.
-4. Click on the "Plot Graph" button to visualize your data on the graph.
-5. Optionally, click on the "Linear Trend" button to calculate and display a trend line using linear regression.
-6. If the correlation is not linear, you can click on "Polynomial Trend" to add a soft curve using polynomial regression.
+4. Click on the "Confirm Data" button to visualize your data on the graph.
+5. Optionally, click on the "Linear" button to calculate and display a trend line using linear regression.
+6. If the correlation is not linear, you can click on "Polynomial" or "Exponential"to add a soft curve using polynomial regression or Exponential correlation.
 7. To download your data, click on the "Download Data" button, and a TXT file will be generated and saved to your device.
 
 ## Technologies Used
@@ -61,14 +62,15 @@ Prof. Pablo Vaz - Maldonado, Uruguay.
 
 # Plots XY - Gráficas para el Laboratorio de Ciencias
 
-La aplicación Plots XY es ideal para crear bosquejos de gráficas XY a partir de los datos proporcionados. Permite además agregar líneas de tendencia (Lineal y Polinómica) y descargar los datos en formato TXT.
+La aplicación Plots XY es ideal para crear bosquejos de gráficas XY a partir de los datos proporcionados. Permite además agregar líneas de tendencia (Lineal, Polinómica, Exponentcial) y descargar los datos en formato TXT.
+
 **Este proyecto está actualmente en construcción y se planean agregar más funcionalidades en el futuro.**
 
 ## ¿Qué se puede hacer con Plots XY?
 
 - Crear gráficas XY: Ingrese sus puntos de datos y visualícelos en una gráfica 2D.
-- Definir las etiquetas de los ejes X e Y, y utilizarlos para el gráfico, la ecuación lineal y los datos a descargar.
-- Agregar líneas de tendencia: Utiliza regresión lineal o polinómica para calcular y mostrar líneas de tendencia en la gráfica.
+- Definir las etiquetas de los ejes X e Y, y utilizarlos para el gráfico y las ecuaciones de ajuste.
+- Agregar líneas de tendencia: Utiliza regresión lineal o polinómica, así como ajuste exponencial para calcular y mostrar líneas de tendencia en la gráfica.
 - Descargar datos: Guarde sus datos en formato TXT para un análisis posterior o compartirlos.
 
 ## Instrucciones
@@ -76,10 +78,9 @@ La aplicación Plots XY es ideal para crear bosquejos de gráficas XY a partir d
 1. Abra la aplicación en cualquier navegador: [Plots XY](https://fisicamaldonado.github.io/graficas/)
 2. Ingrese las magnitudes y unidades a estudiar como etiquetas de los ejes X e Y.
 3. Ingrese los puntos de datos en los campos proporcionados.
-4. Presione el botón "Graficar" para visualizar los datos en la gráfica.
-5. Opcionalmente, presione el botón "Agregar línea de tendencia" para calcular y mostrar una línea de tendencia utilizando regresión lineal.
-6. Si la correlación entre X e Y no es lineal, puede probar el ajuste polinómico con el botón "Curva Suave".
-7. Para descargar los datos, utilice el botón "Descargar datos" y se generará un archivo TXT que se guardará en su dispositivo.
+4. Presione el botón "Confirmar Datos" para visualizar los datos en la gráfica.
+5. Opcionalmente, agregue una linea de tendencia presionando el ajuste deseado (Lineal, Polinómica o Exponencial) para calcular y mostrar una línea de tendencia así como las ecuaciones asociadas a esa curva.
+6. Para descargar los datos, utilice el botón "Descargar datos" y se generará un archivo TXT que se guardará en su dispositivo.
 
 ## Tecnologías utilizadas
 
