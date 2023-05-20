@@ -64,10 +64,12 @@
 <div class="container">
 <canvas id="chartCanvas" width="360" height="360"></canvas>
 </div>
-<button type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary" style="display: none;">Linear Trend</button>
-<button  id="trendButton" onclick="NotLinearTrend()" class="btn btn-primary" style="display: none;">Polynomial Trend</button>
+<p id="trendTypes" style="display: none;">Trend lines:</p>
+<button type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary" style="display: none;">Linear</button>
+<button  id="trendButton" onclick="NotLinearTrend()" class="btn btn-primary" style="display: none;">Polynomial</button>
 <p></p>
-<p id="textFunction" style="display: none;">The linear function is</p><p style="font-family: JetBrains Mono, monospace; display: none;" id ="linealFunction">linealFunctionText</p>
+<p id="textFunction" style="display: none;">The curve function is: </p>
+<p class='centered' style="font-family: JetBrains Mono, monospace; display: none;" id ="trendFunction">linealFunctionText</p>
 
 <p id="descarga_parrafo" style="display: none;">If desired, click the "Download Data" button to save the "data.txt" file in your device.</p>
 <button type="button" id="downloadButton" onclick="downloadData()" class="btn btn-primary" style="display: none;">Download Data</button>
@@ -80,6 +82,7 @@
 <script>
 
 //Define some global variables
+var decimals = 2;
 var labelX = 'x';
 var labelY = 'y';
 var margin = 36;
@@ -109,6 +112,7 @@ document.getElementById('dataForm').addEventListener('submit', function(event) {
     showSuccessTable();
     document.getElementById('downloadButton').style.display = 'inline-block';
     document.getElementById('trendButton').style.display = 'inline-block';
+    document.getElementById("trendTypes").style.display = 'block';
 });
 
 // New rows when pressing "Enter"
@@ -245,6 +249,7 @@ function drawChart() {
     var maxY = Math.max(...points.map(point => point.y));
 
     ctx.beginPath();
+    ctx.strokeStyle = '#282c34';
     ctx.moveTo(margin, chartCanvas.height - margin);
     ctx.lineTo(margin, margin);
     ctx.lineTo(margin - 5, margin + 10); // Arrows
@@ -292,7 +297,7 @@ function drawChart() {
     // Add axis
     ctx.font = '12px Arial';
     ctx.textAlign = 'end';
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = '#282c34';
     ctx.fillText('0', margin - 5, chartCanvas.height - margin + 15);
     ctx.fillText(labelX, chartCanvas.width - margin/2, chartCanvas.height - margin/4);
     ctx.textAlign = 'start';
@@ -301,6 +306,7 @@ function drawChart() {
 
 //Trend line (Linear)
 function plotLine() {
+  drawChart();
   var maxX = Math.max(...points.map(point => point.x));
   var maxY = Math.max(...points.map(point => point.y));
 
@@ -318,8 +324,11 @@ function plotLine() {
     var m = (numPoints * sumXY - sumX * sumY) / (numPoints * sumXSquared - sumX * sumX);
     var n = (sumY - m * sumX) / numPoints;
 
-    m = parseFloat(m.toFixed(4));
-    n = parseFloat(n.toFixed(2));
+    if (m < 0.01){
+      decimals = 5;
+    }
+    m = parseFloat(m.toFixed(decimals));
+    n = parseFloat(n.toFixed(decimals));
 
     var chartWidth = chartCanvas.width - margin * 2;
     var chartHeight = chartCanvas.height - margin * 2;
@@ -347,18 +356,18 @@ function plotLine() {
     var labelY_clean = indexOfOpenParenthesisY >= 0 ? labelY.slice(0, indexOfOpenParenthesisY) : labelY;
 
     if (n >= 0){
-      var linealFunctionText = " : " + labelY_clean + " = " + m + "*" + labelX_clean + " + " + n;
+      var FunctionText =  labelY_clean + " = " + m + "*" + labelX_clean + " + " + n;
     }
     else{
-    var linealFunctionText = " : " + labelY_clean + " = " + m + "*"+labelX_clean + " - " + Math.abs(n); 
+    var FunctionText =  labelY_clean + " = " + m + "*"+labelX_clean + " - " + Math.abs(n); 
     }
-    var linealFunctionElement = document.getElementById("linealFunction");
-    linealFunctionElement.textContent = linealFunctionText;
-    linealFunctionElement.style.display = "inline-block";
-    document.getElementById("textFunction").style.display = "inline-block";
+    var FunctionElement = document.getElementById("trendFunction");
+    FunctionElement.textContent = FunctionText;
+    FunctionElement.style.display = "block";
+    document.getElementById("textFunction").style.display = "block";
   }
   
-  document.getElementById('lineButton').disabled = true;
+  //document.getElementById('lineButton').disabled = true;
 }
 
 // Polynomial trend
@@ -376,11 +385,41 @@ function NotLinearTrend() {
     console.log("Coeficiente a:", coefficients.a);
     console.log("Coeficiente b:", coefficients.b);
     console.log("Coeficiente c:", coefficients.c);
+    drawChart();
     drawQuadraticCurve(coefficients);// Plot the poly curve
-    document.getElementById('trendButton').disabled = true;
+    
+    // Show quadratic function
+    var indexOfOpenParenthesisX = labelX.indexOf('(');
+    var labelX_clean = indexOfOpenParenthesisX >= 0 ? labelX.slice(0, indexOfOpenParenthesisX) : labelX;
+    //Remove parentesis
+    var indexOfOpenParenthesisY = labelY.indexOf('(');
+    var labelY_clean = indexOfOpenParenthesisY >= 0 ? labelY.slice(0, indexOfOpenParenthesisY) : labelY;
+    
+    var a = coefficients.a;
+    var b = coefficients.b;
+    var c = coefficients.c;
+    
+    if (c < 0.01){
+      decimals = 5;
+    }
+    a = parseFloat(a.toFixed(decimals));
+    b = parseFloat(b.toFixed(decimals));
+    c = parseFloat(c.toFixed(decimals));
+
+    var sign_b = ' + ';
+    var sign_a = ' + ';
+    if (b < 0){
+      sign_b = ' - ';
+    }
+    if (a < 0){
+      sign_a = ' - '
+    }
+    var FunctionText = labelY_clean + " = " + c + "*" + labelX_clean + "²" + sign_b + Math.abs(b) + "*" + labelX_clean + sign_a + Math.abs(a);
+    var FunctionElement = document.getElementById("trendFunction");
+    FunctionElement.textContent = FunctionText;
+    FunctionElement.style.display = "block";
+    document.getElementById("textFunction").style.display = "block";
   }
-  
-  
 }
 
 // Polynomial regression function to solve: a, b and c

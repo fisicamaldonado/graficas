@@ -65,19 +65,21 @@
 <div class="container">
 <canvas id="chartCanvas" width="360" height="360"></canvas>
 </div>
-<button type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary" style="display: none;">Línea de tendencia</button>
-<button  id="trendButton" onclick="NotLinearTrend()" class="btn btn-primary" style="display: none;">Curva Suave</button>
+<p id="trendTypes" style="display: none;">Curvas de ajuste:</p>
+<button type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary" style="display: none;">Lineal</button>
+<button  id="trendButton" onclick="NotLinearTrend()" class="btn btn-primary" style="display: none;">Polinómica</button>
 <p></p>
-<p id="textFunction" style="display: none;">La función lineal es</p><p style="font-family: JetBrains Mono, monospace; display: none;" id ="linealFunction">linealFunctionText</p>
-
+<p id="textFunction" style="display: none;">La función asociada a la curva es:</p>
+<p class='centered' style="font-family: JetBrains Mono, monospace; display: none;" id ="trendFunction">linealFunctionText</p>
 <p id="descarga_parrafo" style="display: none;">Si lo desea presione el botón "Descargar datos" para guardar el archivo "datos.txt".</p>
 <button type="button" id="downloadButton" onclick="downloadData()" class="btn btn-primary" style="display: none;">Descargar datos</button>
 <button onclick="location.reload();" class="btn btn-primary">Reiniciar</button>
 <p></p>
-<p class='centered'>(c)2023 - Prof. Pablo Vaz</p>
+<p class='centered'>©2023 - Prof. Pablo Vaz</p>
 <a href="https://fisicamaldonado.wordpress.com" target="_blank"><p class='centered'>fisicamaldonado.wordpress.com</p></a>
 <p class='centered'>Maldonado - Uruguay</p>    
 <script>
+var decimals = 2;
 var labelX = 'x';
 var labelY = 'y';
 var margin = 36;
@@ -107,6 +109,7 @@ document.getElementById('dataForm').addEventListener('submit', function(event) {
     showSuccessTable();
     document.getElementById('downloadButton').style.display = 'inline-block';
     document.getElementById('trendButton').style.display = 'inline-block';
+    document.getElementById("trendTypes").style.display = 'block';
 });
 
 // Agregar nuevas filas al presionar Enter en los campos de entrada
@@ -243,7 +246,7 @@ function drawChart() {
     var maxY = Math.max(...points.map(point => point.y));
 
     ctx.beginPath();
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = '#282c34';
     ctx.moveTo(margin, chartCanvas.height - margin);
     ctx.lineTo(margin, margin);
     ctx.lineTo(margin - 5, margin + 10); // Flecha en la punta del eje y
@@ -291,7 +294,8 @@ function drawChart() {
     // Agregar los ejes con los datos
     ctx.font = '12px Arial';
     ctx.textAlign = 'end';
-    ctx.fillStyle = 'black';
+    //ctx.fillStyle = 'black';
+    ctx.fillStyle = '#282c34';
     ctx.fillText('0', margin - 5, chartCanvas.height - margin + 15);
     ctx.fillText(labelX, chartCanvas.width - margin/2, chartCanvas.height - margin/4);
     ctx.textAlign = 'start';
@@ -318,8 +322,11 @@ function plotLine() {
     var m = (numPoints * sumXY - sumX * sumY) / (numPoints * sumXSquared - sumX * sumX);
     var n = (sumY - m * sumX) / numPoints;
 
-    m = parseFloat(m.toFixed(4));
-    n = parseFloat(n.toFixed(2));
+    if (m < 0.01){
+      decimals = 5;
+    } 
+    m = parseFloat(m.toFixed(decimals));
+    n = parseFloat(n.toFixed(decimals));
 
     var chartWidth = chartCanvas.width - margin * 2;
     var chartHeight = chartCanvas.height - margin * 2;
@@ -347,15 +354,15 @@ function plotLine() {
     var labelY_clean = indexOfOpenParenthesisY >= 0 ? labelY.slice(0, indexOfOpenParenthesisY) : labelY;
 
     if (n >= 0){
-      var linealFunctionText = " : " + labelY_clean + " = " + m + "*" + labelX_clean + " + " + n;
+      var FunctionText = labelY_clean + " = " + m + "*" + labelX_clean + " + " + n;
     }
     else{
-    var linealFunctionText = " : " + labelY_clean + " = " + m + "*"+labelX_clean + " - " + Math.abs(n); 
+    var FunctionText =  labelY_clean + " = " + m + "*"+labelX_clean + " - " + Math.abs(n); 
     }
-    var linealFunctionElement = document.getElementById("linealFunction");
-    linealFunctionElement.textContent = linealFunctionText;
-    linealFunctionElement.style.display = "inline-block";
-    document.getElementById("textFunction").style.display = "inline-block";
+    var FunctionElement = document.getElementById("trendFunction");
+    FunctionElement.textContent = FunctionText;
+    FunctionElement.style.display = "block";
+    document.getElementById("textFunction").style.display = "block";
   }
   
   //document.getElementById('lineButton').disabled = true;
@@ -380,9 +387,40 @@ function NotLinearTrend() {
     drawChart();
     drawQuadraticCurve(coefficients);// Dibujar la parábola suave en el gráfico 
     //document.getElementById('trendButton').disabled = true;
+    
+    // Presentar la función cuadrática
+    var indexOfOpenParenthesisX = labelX.indexOf('(');
+    var labelX_clean = indexOfOpenParenthesisX >= 0 ? labelX.slice(0, indexOfOpenParenthesisX) : labelX;
+    //Remover paréntesis si hay datos
+    var indexOfOpenParenthesisY = labelY.indexOf('(');
+    var labelY_clean = indexOfOpenParenthesisY >= 0 ? labelY.slice(0, indexOfOpenParenthesisY) : labelY;
+    
+    var a = coefficients.a;
+    var b = coefficients.b;
+    var c = coefficients.c;
+
+    if (c < 0.01){
+      decimals = 5;
+    }
+
+    a = parseFloat(a.toFixed(decimals));
+    b = parseFloat(b.toFixed(decimals));
+    c = parseFloat(c.toFixed(decimals));
+
+    var sign_b = ' + ';
+    var sign_a = ' + ';
+    if (b < 0){
+      sign_b = ' - ';
+    }
+    if (a < 0){
+      sign_a = ' - '
+    }
+      var FunctionText = labelY_clean + " = " + c + "*" + labelX_clean + "²" + sign_b + Math.abs(b) + "*" + labelX_clean + sign_a + Math.abs(a);
+    var FunctionElement = document.getElementById("trendFunction");
+    FunctionElement.textContent = FunctionText;
+    FunctionElement.style.display = "block";
+    document.getElementById("textFunction").style.display = "block";
   }
-  
-  
 }
 
 // Función de regresión cuadrática para encontrar los coeficientes a, b y c

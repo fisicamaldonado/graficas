@@ -5,7 +5,7 @@ h1,h2 {
 body {
     font-family: Arial, sans-serif;
     margin: 5px;
-    font-size: 1rem;
+    font-size: 1.1rem;
 }
 form {
     width: 100%;
@@ -32,9 +32,10 @@ button {
     margin-bottom: 10px;
 }
 canvas {
-    border: 2px solid #333;
+    border: 2px solid #282c34;
     margin-top: 10px;
     margin-bottom: 10px;
+    background-color: #ffffff;
 }
 p{
     text-align: justify;
