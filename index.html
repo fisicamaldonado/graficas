@@ -65,7 +65,7 @@
 <button type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary" style="display: none;">Línea de tendencia</button>
 <button  id="trendButton" onclick="NotLinearTrend()" class="btn btn-primary" style="display: none;">Curva Suave</button>
 <p></p>
-<p id="textFunction" style="display: none;">La función lineal es: </p><p style="font-family: Consolas; display: none;" id ="linealFunction">linealFunctionText</p>
+<p id="textFunction" style="display: none;">La función lineal es</p><p style="font-family: JetBrains Mono, monospace; display: none;" id ="linealFunction">linealFunctionText</p>
 
 <p id="descarga_parrafo" style="display: none;">Si lo desea presione el botón "Descargar datos" para guardar el archivo "datos.txt".</p>
 <button type="button" id="downloadButton" onclick="downloadData()" class="btn btn-primary" style="display: none;">Descargar datos</button>
@@ -339,10 +339,10 @@ function plotLine() {
     var labelX_clean = labelX.slice(0, labelX.indexOf('('));//quita paréntesis de cualquier etiqueta para remover la unidad y dejar solo la magnitud.
     var labelY_clean = labelY.slice(0, labelY.indexOf('('));
     if (n >= 0){
-      var linealFunctionText = "  " + labelY_clean + " = " + m + "*" + labelX_clean + " + " + n;
+      var linealFunctionText = " : " + labelY_clean + " = " + m + "*" + labelX_clean + " + " + n;
     }
     else{
-    var linealFunctionText = "  " + labelY_clean + " = " + m + "*"+labelX_clean + " - " + Math.abs(n); 
+    var linealFunctionText = " : " + labelY_clean + " = " + m + "*"+labelX_clean + " - " + Math.abs(n); 
     }
     var linealFunctionElement = document.getElementById("linealFunction");
     linealFunctionElement.textContent = linealFunctionText;
