@@ -340,8 +340,12 @@ function plotLine() {
 
     // Show linear equation
     
-    var labelX_clean = labelX.slice(0, labelX.indexOf('('));//remove parentesis (and its content) of labels
-    var labelY_clean = labelY.slice(0, labelY.indexOf('('));
+    var indexOfOpenParenthesisX = labelX.indexOf('(');
+    var labelX_clean = indexOfOpenParenthesisX >= 0 ? labelX.slice(0, indexOfOpenParenthesisX) : labelX;
+    //Remove parentesis
+    var indexOfOpenParenthesisY = labelY.indexOf('(');
+    var labelY_clean = indexOfOpenParenthesisY >= 0 ? labelY.slice(0, indexOfOpenParenthesisY) : labelY;
+
     if (n >= 0){
       var linealFunctionText = " : " + labelY_clean + " = " + m + "*" + labelX_clean + " + " + n;
     }

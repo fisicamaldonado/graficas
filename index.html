@@ -243,6 +243,7 @@ function drawChart() {
     var maxY = Math.max(...points.map(point => point.y));
 
     ctx.beginPath();
+    ctx.strokeStyle = 'black';
     ctx.moveTo(margin, chartCanvas.height - margin);
     ctx.lineTo(margin, margin);
     ctx.lineTo(margin - 5, margin + 10); // Flecha en la punta del eje y
@@ -299,6 +300,7 @@ function drawChart() {
 
 
 function plotLine() {
+  drawChart();
   var maxX = Math.max(...points.map(point => point.x));
   var maxY = Math.max(...points.map(point => point.y));
 
@@ -338,8 +340,12 @@ function plotLine() {
 
     // Presentar la función lineal
     
-    var labelX_clean = labelX.slice(0, labelX.indexOf('('));//quita paréntesis de cualquier etiqueta para remover la unidad y dejar solo la magnitud.
-    var labelY_clean = labelY.slice(0, labelY.indexOf('('));
+    var indexOfOpenParenthesisX = labelX.indexOf('(');
+    var labelX_clean = indexOfOpenParenthesisX >= 0 ? labelX.slice(0, indexOfOpenParenthesisX) : labelX;
+    //Remover paréntesis si hay datos
+    var indexOfOpenParenthesisY = labelY.indexOf('(');
+    var labelY_clean = indexOfOpenParenthesisY >= 0 ? labelY.slice(0, indexOfOpenParenthesisY) : labelY;
+
     if (n >= 0){
       var linealFunctionText = " : " + labelY_clean + " = " + m + "*" + labelX_clean + " + " + n;
     }
@@ -352,11 +358,12 @@ function plotLine() {
     document.getElementById("textFunction").style.display = "inline-block";
   }
   
-  document.getElementById('lineButton').disabled = true;
+  //document.getElementById('lineButton').disabled = true;
 }
 
 // Función de ajuste de curva suave (No Lineal)
 function NotLinearTrend() {
+  
   if (points.length >= 3) {
     // Obtener las coordenadas x e y de los puntos
     var x = points.map(point => point.x);
@@ -370,8 +377,9 @@ function NotLinearTrend() {
     console.log("Coeficiente a:", coefficients.a);
     console.log("Coeficiente b:", coefficients.b);
     console.log("Coeficiente c:", coefficients.c);
-    drawQuadraticCurve(coefficients);// Dibujar la parábola suave en el gráfico
-    document.getElementById('trendButton').disabled = true;
+    drawChart();
+    drawQuadraticCurve(coefficients);// Dibujar la parábola suave en el gráfico 
+    //document.getElementById('trendButton').disabled = true;
   }
   
   
