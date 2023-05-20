@@ -16,7 +16,7 @@ The Plots XY app allows users to create sketches of XY graphs based on provided 
 
 ## Usage
 
-1. Open the app in any web browser: [Plots XY](https://fisicamaldonado.github.io/graficas/)
+1. Open the app in any web browser: [Plots XY](https://fisicamaldonado.github.io/graficas/english.html)
 2. Input the X and Y Axis labels and click assign labels.
 3. Input your data points in the provided form fields.
 4. Click on the "Plot Graph" button to visualize your data on the graph.
