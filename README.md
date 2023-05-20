@@ -34,9 +34,13 @@ The Plots XY app allows users to create sketches of XY graphs based on provided 
 
 This project is licensed under the [MIT License](LICENSE).
 
-## Contributing
+## How to support the project?
 
-Contributions are welcome! If you have any ideas, suggestions, or bug fixes, please open an issue or submit a pull request.
+If you liked the PLOT XY application and would like to support this project, you can consider:
+- Sharing the application with your colleagues and peers through your social networks.
+- Support my book: ["The fascinating world of Physics" - Amazon](https://www.amazon.com/dp/B086SMT43S)
+
+Thank you very much for your support!
 
 ## Acknowledgments
 
@@ -48,6 +52,8 @@ Contributions are welcome! If you have any ideas, suggestions, or bug fixes, ple
 
 If you have any questions, suggestions, or feedback, please feel free to reach out through: fisicamaldonado.vaz@gmail.com.
 Thanks for your support.
+
+Prof. Pablo Vaz - Maldonado, Uruguay.
 
 
 # ----- Versión en Español-------
@@ -85,9 +91,13 @@ La aplicación Plots XY es ideal para crear bosquejos de gráficas XY a partir d
 
 Este proyecto está bajo la licencia [MIT License](LICENSE).
 
-## Contribuciones
+## ¿Cómo apoyar al proyecto?
 
-¡Las contribuciones son bienvenidas! Si tiene ideas, sugerencias o correcciones de errores, por favor abra un issue o envíe un pull request.
+Si le gustó la aplicación PLOT XY y desea apoyar este proyecto puede considerar:
+- Compartir la apliación con sus colegas y compañeros a través de sus redes sociales.
+- Apoyar mi libro: ["El fascinante mundo de la Física" - Amazon](https://www.amazon.com/dp/B07HVRWHCF/)
+
+Muchas gracias por su apoyo!
 
 ## Agradecimientos
 
@@ -99,3 +109,5 @@ Este proyecto está bajo la licencia [MIT License](LICENSE).
 
 Si tiene alguna pregunta, sugerencia o comentario, no dude en contactarme a través de fisicamaldonado.vaz@gmail.com.
 Gracias por su apoyo!
+
+Prof. Pablo Vaz - Maldonado, Uruguay.
