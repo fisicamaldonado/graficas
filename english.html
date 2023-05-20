@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Plots XY - Science Lab</title>
+    <title>Plots XY</title>
     <meta name="description" content="Plots XY ofrece gráficos interactivos y herramientas de visualización para análisis de datos. Ideal para prácticas de ciencias en Secundaria y primeros años universitarios.">
     <meta name="google-site-verification" content="1psBQTzJBgx9fHWgpllgWjbrcEWHsjlsgn5J0C7KF_4" />
     <meta charset="UTF-8">
@@ -10,22 +10,42 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h1>Plots XY</h1>
-<h2>Sience Lab</h2>
+<h1 style="font-weight:bold; color: rgb(43, 43, 43);">Plots XY</h1>
+<h2>2D Plots for Sience Lab</h2>
 <div style="text-align: right;">
     <button type="button" class="btn btn-primary" onclick="window.location.href='index.html'">ES</button>
   </div>
 <h3>How it works?</h3>
-<p>Please enter the x and y data into the table by pressing "Enter" to generate more rows. When finished, click the "Confirm Data" button to verify and plot the entered data. You can then download it as a "data.txt" file.</p>
-<p>[Important] Currently, the application only supports positive (x,y) inputs and linear regression, which will be useful for sketching graphs in most Science laboratory experiments. </p>
+<p>After setting the axis labels, enter the x and y data in the table. Press "Enter" to generate more rows. When finished, click the "Confirm data" button to verify and plot the entered data. Please refer to the tutorial if necessary.</p>
+<p>[Important] Currently, the application only supports positive (x,y) inputs, linear and polynomial trend, which will be useful for sketching graphs in most Science laboratory experiments. </p>
+<button type="button" class="btn btn-primary" onclick="window.location.href='https://fisicamaldonado.wordpress.com'">Tutorial</button>
+<p></p>
 <form id="dataForm">
-    <div id="tableContainer">
+  <div id="tableContainerLabels">
+    <table>
+      <thead>
+        <tr>
+          <th class="centered">X-axis label</th>
+          <th class="centered">Y-axis label</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="text" id="labelX" name="labelX" autocomplete="off"></td>
+          <td><input type="text" id="labelY" name="labelY" autocomplete="off"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button id= "axisButton" type="button" onclick="asignarEjes()" class="btn btn-primary">Assign Labels</button>
+  <p></p> 
+  <div id="tableContainer">
     <table>
         <thead>
-            <tr>
-                <th>Data X</th>
-                <th>Data Y</th>
-            </tr>
+          <tr>
+            <th id="tablaEncabezadoX" class="centered">Data X</th>
+            <th id="tablaEncabezadoY" class="centered">Data Y</th>
+        </tr>
         </thead>
         <tbody id="dataInputs"></tbody>
     </table>
@@ -37,45 +57,60 @@
 </form>
     
 <div class="mt-4">
-    <p id="successMessage" style="display: none;">Points entered successfully! Please verify that the data is correct.</p>
+    <p id="successMessage" style="display: none;">Points entered successfully! Please verify that the data is correct in the next table.</p>
     <table id="successTable" class="table table-bordered" style="display: none;"></table>
 </div>
 <div class="container">
 <canvas id="chartCanvas" width="360" height="360"></canvas>
 </div>
-<button type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary" style="display: none;">Trend Line</button>
+<button type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary" style="display: none;">Linear Trend</button>
+<button  id="trendButton" onclick="NotLinearTrend()" class="btn btn-primary" style="display: none;">Polynomial Trend</button>
 <p></p>
-<p id ='linealFunction' style = "display: none;">linealFunctionText</p>
+<p id="textFunction" style="display: none;">The linear function is</p><p style="font-family: JetBrains Mono, monospace; display: none;" id ="linealFunction">linealFunctionText</p>
 
-<p id="descarga_parrafo" style="display: none;">If desired, click the "Download Data" button to save the "data.txt" file.</p>
+<p id="descarga_parrafo" style="display: none;">If desired, click the "Download Data" button to save the "data.txt" file in your device.</p>
 <button type="button" id="downloadButton" onclick="downloadData()" class="btn btn-primary" style="display: none;">Download Data</button>
 <button onclick="location.reload();" class="btn btn-primary">Reset</button>
 <p></p>
 <p class='centered'>(c)2023 - Prof. Pablo Vaz</p>
 <a href="https://fisicamaldonado.wordpress.com" target="_blank"><p class='centered'>fisicamaldonado.wordpress.com</p></a>
-<p class='centered'>Maldonado - Uruguay</p>    
+<p class='centered'>Maldonado - Uruguay</p>
+
 <script>
+
+//Define some global variables
+var labelX = 'x';
+var labelY = 'y';
+var margin = 36;
+var maxX;
+var maxY;
+var points;
 var isGraphGenerated = false;
 var successTable = document.getElementById('successTable');
 var chartCanvas = document.getElementById('chartCanvas');
 var ctx = chartCanvas.getContext('2d');
 var points = [];
-createDataRow(1);// Create 1 Row when the App starts
+createDataRow(1);// Create one row at start
 
-// Generate the verification table and disable "Confirma Data" Button
+// Generate the rows and disable some buttons
 document.getElementById('dataForm').addEventListener('submit', function(event) {
     event.preventDefault();
     if (isGraphGenerated) return;
 
     isGraphGenerated = true;
     document.getElementById('submitButton').disabled = true;
+    document.getElementById('botonEliminar').style.display = 'none';
+    document.getElementById('axisButton').style.display = 'none';
+    document.getElementById('tableContainerLabels').style.display = 'none';
+    document.getElementById('tableContainer').style.display = 'none';
     document.getElementById('successMessage').style.display = 'block';
     document.getElementById("descarga_parrafo").style.display = "block";
     showSuccessTable();
     document.getElementById('downloadButton').style.display = 'inline-block';
+    document.getElementById('trendButton').style.display = 'inline-block';
 });
 
-// New Rows when "Enter" is pressed
+// New rows when pressing "Enter"
 document.getElementById('dataForm').addEventListener('keydown', function(event) {
     if (isGraphGenerated || event.key !== 'Enter') return;
 
@@ -84,8 +119,14 @@ document.getElementById('dataForm').addEventListener('keydown', function(event) 
     createDataRow(numPoints + 1);
     toggleBotonEliminar();
 });
+function asignarEjes() {
+  labelX = document.getElementById('labelX').value;
+  labelY = document.getElementById('labelY').value;
+  document.getElementById('tablaEncabezadoX').innerText = labelX;
+  document.getElementById('tablaEncabezadoY').innerText = labelY;
+}
 
-//The "Delete Row" button is shown only when Rows > 1
+//Delete button is shown only when rows > 1
 function toggleBotonEliminar() {
   var numFilas = document.getElementById('dataInputs').getElementsByTagName('tr').length;
   var botonEliminar = document.getElementById('botonEliminar');
@@ -107,7 +148,7 @@ function eliminarFila() {
   }
 }
 
-//Create Rows
+//Create more rows
 function createDataRow(rowNum) {
     var tableBody = document.getElementById('dataInputs');
     var row = document.createElement('tr');
@@ -115,7 +156,7 @@ function createDataRow(rowNum) {
     var inputX = document.createElement('input');
     inputX.type = 'number';
     inputX.name = 'x' + rowNum;
-    inputX.step = 'any'; // Allow decimal values
+    inputX.step = 'any'; // Allows decimal values
     inputX.required = true;
     cellX.appendChild(inputX);
 
@@ -141,6 +182,11 @@ function showSuccessTable() {
     var rows = document.getElementById('dataInputs').getElementsByTagName('tr');
     var tableBody = successTable.createTBody();
 
+    // Create the first row with labels
+    var firstRow = tableBody.insertRow(0);
+    firstRow.insertCell(0).textContent = labelX;
+    firstRow.insertCell(1).textContent = labelY;
+
     for (var i = 0; i < rows.length; i++) {
         var row = rows[i];
         var xValue = row.cells[0].querySelector('input').value;
@@ -148,20 +194,17 @@ function showSuccessTable() {
         xValues.push(xValue);
         yValues.push(yValue);
 
-        var newRow = tableBody.insertRow(i);
+        var newRow = tableBody.insertRow(i + 1); // Start data in the 2nd row
         newRow.insertCell(0).textContent = xValue;
         newRow.insertCell(1).textContent = yValue;
 
         points.push({ x: parseFloat(xValue), y: parseFloat(yValue) });
-        document.getElementById('lineButton').style.display = 'block';
-
+        document.getElementById('lineButton').style.display = 'inline-block';
     }
-
     drawChart();
-
     successTable.style.display = 'table';
     }
- // Download TXT file
+ // Download data as TXT file
 function downloadData() {
   var xValues = [];
   var yValues = [];
@@ -176,8 +219,7 @@ function downloadData() {
     yValues.push(yValue);
   }
 
-  var data = "X Values\tY Values\n";
-
+  var data = labelX + " | "+ labelY + "\n";
   for (var j = 0; j < xValues.length; j++) {
     data += xValues[j] + "\t" + yValues[j] + "\n";
   }
@@ -193,21 +235,45 @@ function downloadData() {
   document.body.removeChild(link);
 }
 
-// Plot the Chart and the Data points
+// Plot the data
 function drawChart() {
     console.log(points);
     ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
+
     var maxX = Math.max(...points.map(point => point.x));
     var maxY = Math.max(...points.map(point => point.y));
-
-    // Margin
-    var margin = 40;
 
     ctx.beginPath();
     ctx.moveTo(margin, chartCanvas.height - margin);
     ctx.lineTo(margin, margin);
+    ctx.lineTo(margin - 5, margin + 10); // Arrows
+    ctx.moveTo(margin, margin);
+    ctx.lineTo(margin + 5, margin + 10); 
     ctx.moveTo(margin, chartCanvas.height - margin);
     ctx.lineTo(chartCanvas.width - margin, chartCanvas.height - margin);
+    ctx.lineTo(chartCanvas.width - margin - 10, chartCanvas.height - margin - 5); 
+    ctx.moveTo(chartCanvas.width - margin, chartCanvas.height - margin);
+    ctx.lineTo(chartCanvas.width - margin - 10, chartCanvas.height - margin + 5);
+
+    // Divide axis in 4 parts
+    var segmentLengthX = (chartCanvas.width - margin * 2) / 4;
+    var segmentLengthY = (chartCanvas.height - margin * 2) / 4;
+
+    for (var i = 1; i <= 4; i++) {
+        var divisionX = maxX * i / 4;
+        var divisionY = maxY * i / 4;
+
+        ctx.moveTo(margin + i * segmentLengthX, chartCanvas.height - margin - 5);
+        ctx.lineTo(margin + i * segmentLengthX, chartCanvas.height - margin + 5);
+        ctx.moveTo(margin - 5, chartCanvas.height - margin - i * segmentLengthY);
+        ctx.lineTo(margin + 5, chartCanvas.height - margin - i * segmentLengthY);
+
+        ctx.font = '10px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(divisionX.toFixed(2), margin + i * segmentLengthX, chartCanvas.height - margin + 15);
+        ctx.fillText(divisionY.toFixed(2), margin - 15, chartCanvas.height - margin - i * segmentLengthY);
+    }
+
     ctx.stroke();
 
     // Plot the points
@@ -222,46 +288,48 @@ function drawChart() {
         ctx.stroke();
     }
   
-    // Add the XY Axis
+    // Add axis
     ctx.font = '12px Arial';
     ctx.textAlign = 'end';
+    ctx.fillStyle = 'black';
     ctx.fillText('0', margin - 5, chartCanvas.height - margin + 15);
-    ctx.fillText('x_max: ' + maxX, chartCanvas.width - margin, chartCanvas.height - margin + 15);
+    ctx.fillText(labelX, chartCanvas.width - margin/2, chartCanvas.height - margin/4);
     ctx.textAlign = 'start';
-    ctx.fillText('y_max: ' + maxY, margin, margin - 5);
+    ctx.fillText(labelY, margin/2, margin/2);
 }
+
+//Trend line (Linear)
 function plotLine() {
   var maxX = Math.max(...points.map(point => point.x));
   var maxY = Math.max(...points.map(point => point.y));
 
-  // Margin
-  var margin = 36;
+
   if (points.length >= 2) {
-    // Trend line coeficients
-    var x = points.map(point => point.x);//Extrae las coordenadas de cada punto en el array 'points' y las almacena en los arrays x e y, respectivamente.
+    // Coefficients
+    var x = points.map(point => point.x);
     var y = points.map(point => point.y);
-    var sumX = x.reduce((a, b) => a + b, 0);//Calcula la suma de todos los valores en x y y.
+    var sumX = x.reduce((a, b) => a + b, 0);
     var sumY = y.reduce((a, b) => a + b, 0);
-    var sumXY = x.map((value, index) => value * y[index]).reduce((a, b) => a + b, 0);//Calcula la suma de los productos de cada elemento en x y su correspondiente elemento en y.
-    var sumXSquared = x.map(value => value * value).reduce((a, b) => a + b, 0);//Calcula la suma de los cuadrados de los valores en x.
-    var numPoints = points.length;//Determina el número de puntos disponibles
+    var sumXY = x.map((value, index) => value * y[index]).reduce((a, b) => a + b, 0);
+    var sumXSquared = x.map(value => value * value).reduce((a, b) => a + b, 0);
+    var numPoints = points.length;
 
     var m = (numPoints * sumXY - sumX * sumY) / (numPoints * sumXSquared - sumX * sumX);
     var n = (sumY - m * sumX) / numPoints;
 
-    m = parseFloat(m.toFixed(3));
-    n = parseFloat(n.toFixed(3));
+    m = parseFloat(m.toFixed(4));
+    n = parseFloat(n.toFixed(2));
 
     var chartWidth = chartCanvas.width - margin * 2;
     var chartHeight = chartCanvas.height - margin * 2;
 
-    // Calculate the Trend line coordinates for the start and end
+    // Start and End coordinates for the Trend line
     var xStart = margin;
     var yStart = chartCanvas.height - margin - (n / maxY) * chartHeight;
     var xEnd = margin + chartWidth;
     var yEnd = chartCanvas.height - margin - ((m * maxX + n) / maxY) * chartHeight;
 
-    // Plot the Trend line
+    // Plot the line between margins
     ctx.beginPath();
     ctx.moveTo(xStart, yStart);
     ctx.lineTo(xEnd, yEnd);
@@ -269,13 +337,155 @@ function plotLine() {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Show the linear function
-    var linealFunctionText = "The linear function is: y = " + m + "x + " + n;
+    // Show linear equation
+    
+    var labelX_clean = labelX.slice(0, labelX.indexOf('('));//remove parentesis (and its content) of labels
+    var labelY_clean = labelY.slice(0, labelY.indexOf('('));
+    if (n >= 0){
+      var linealFunctionText = " : " + labelY_clean + " = " + m + "*" + labelX_clean + " + " + n;
+    }
+    else{
+    var linealFunctionText = " : " + labelY_clean + " = " + m + "*"+labelX_clean + " - " + Math.abs(n); 
+    }
     var linealFunctionElement = document.getElementById("linealFunction");
     linealFunctionElement.textContent = linealFunctionText;
-    linealFunctionElement.style.display = "block";
+    linealFunctionElement.style.display = "inline-block";
+    document.getElementById("textFunction").style.display = "inline-block";
   }
+  
+  document.getElementById('lineButton').disabled = true;
 }
+
+// Polynomial trend
+function NotLinearTrend() {
+  if (points.length >= 3) {
+    // Get the points coordinates
+    var x = points.map(point => point.x);
+    var y = points.map(point => point.y);
+    var maxX = Math.max(...points.map(point => point.x));
+
+    // calculate the polynomial coefficients (a, b, c)
+    var coefficients = quadraticRegression(x, y);
+
+    // Show the coefficients in the console (just for fun, I mean debug!)
+    console.log("Coeficiente a:", coefficients.a);
+    console.log("Coeficiente b:", coefficients.b);
+    console.log("Coeficiente c:", coefficients.c);
+    drawQuadraticCurve(coefficients);// Plot the poly curve
+    document.getElementById('trendButton').disabled = true;
+  }
+  
+  
+}
+
+// Polynomial regression function to solve: a, b and c
+function quadraticRegression(x, y) {
+  var n = x.length;
+  var sumX = 0;
+  var sumX2 = 0;
+  var sumX3 = 0;
+  var sumX4 = 0;
+  var sumY = 0;
+  var sumXY = 0;
+  var sumX2Y = 0;
+
+  for (var i = 0; i < n; i++) {
+    sumX += x[i];
+    sumX2 += Math.pow(x[i], 2);
+    sumX3 += Math.pow(x[i], 3);
+    sumX4 += Math.pow(x[i], 4);
+    sumY += y[i]; 
+    sumXY += x[i] * y[i];
+    sumX2Y += Math.pow(x[i], 2) * y[i];
+  }
+
+  // Solve the system of equations
+  var matrix = [
+    [n, sumX, sumX2, sumY],
+    [sumX, sumX2, sumX3, sumXY],
+    [sumX2, sumX3, sumX4, sumX2Y]
+  ];
+
+  var coefficients = gaussianElimination(matrix);
+
+  return {
+    a: coefficients[0],
+    b: coefficients[1],
+    c: coefficients[2]
+  };
+}
+
+// Gaussian Elimination function
+function gaussianElimination(matrix) {
+  var n = matrix.length;
+
+  for (var i = 0; i < n; i++) {
+    // Pivot elements
+    var maxRow = i;
+    for (var j = i + 1; j < n; j++) {
+      if (Math.abs(matrix[j][i]) > Math.abs(matrix[maxRow][i])) {
+        maxRow = j;
+      }
+    }
+
+    // Change rows
+    var temp = matrix[i];
+    matrix[i] = matrix[maxRow];
+    matrix[maxRow] = temp;
+
+    // Zeros in the pivot elements
+    for (var k = i + 1; k < n; k++) {
+      var factor = matrix[k][i] / matrix[i][i];
+      for (var j = i + 1; j <= n; j++) {
+        matrix[k][j] -= factor * matrix[i][j];
+      }
+    }
+  }
+
+  // Solving the equations
+var coefficients = new Array(n);
+for (var i = n - 1; i >= 0; i--) {
+coefficients[i] = matrix[i][n];
+for (var j = i + 1; j < n; j++) {
+coefficients[i] -= matrix[i][j] * coefficients[j];
+}
+coefficients[i] /= matrix[i][i];
+}
+
+return coefficients;
+}
+function drawQuadraticCurve(coefficients) {
+
+  var maxX = Math.max(...points.map(point => point.x));
+  var maxY = Math.max(...points.map(point => point.y));
+  console.log("maxX = " + maxX + " max Y = " + maxY);
+  var chartWidth = chartCanvas.width - margin * 2;
+  var chartHeight = chartCanvas.height - margin * 2;
+  console.log("chartHeight = "+chartHeight);
+  ctx.beginPath();
+  ctx.moveTo(margin, chartCanvas.height - margin - (points[0].y / maxY) * chartHeight);
+
+  var step = maxX / 100; // Adjust this value to get a softer curve
+
+  for (var x = 0; x <= maxX; x += step) {
+    var y = evaluateQuadraticPolynomial(coefficients, x);
+    var xCoord = margin + (x / maxX) * chartWidth;
+    var yCoord = chartCanvas.height - margin - (y / maxY) * chartHeight;
+    ctx.lineTo(xCoord, yCoord);
+    console.log("xCoord = " + xCoord + " yCoord = " + yCoord);
+  }
+    ctx.strokeStyle = 'blue';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  
+}
+
+// Evaluate the points x and y in the quadratic function
+function evaluateQuadraticPolynomial(coefficients, x) {
+  var result = coefficients.a + coefficients.b * x + coefficients.c * Math.pow(x, 2);
+  return result;
+}
+
 </script>
 </body>
 </html>
