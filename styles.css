@@ -30,6 +30,7 @@ input {
 button {
     margin-top: 10px;
     margin-bottom: 10px;
+    margin: 5px;
 }
 canvas {
     border: 2px solid #282c34;
@@ -49,4 +50,4 @@ max-width: 400px;
 }
 .centered {
     text-align: center;
-  }  
+}
