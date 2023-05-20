@@ -16,12 +16,13 @@ The Plots XY app allows users to create sketches of XY graphs based on provided 
 
 ## Usage
 
-1. Input the X and Y Axis labels and click assign labels.
-2. Input your data points in the provided form fields.
-3. Click on the "Plot Graph" button to visualize your data on the graph.
-4. Optionally, click on the "Linear Trend" button to calculate and display a trend line using linear regression.
-5. If the correlation is not linear, you can click on "Polynomial Trend" to add a soft curve using polynomial regression.
-6. To download your data, click on the "Download Data" button, and a TXT file will be generated and saved to your device.
+1. Open the app in any web browser: [Plots XY](https://fisicamaldonado.github.io/graficas/)
+2. Input the X and Y Axis labels and click assign labels.
+3. Input your data points in the provided form fields.
+4. Click on the "Plot Graph" button to visualize your data on the graph.
+5. Optionally, click on the "Linear Trend" button to calculate and display a trend line using linear regression.
+6. If the correlation is not linear, you can click on "Polynomial Trend" to add a soft curve using polynomial regression.
+7. To download your data, click on the "Download Data" button, and a TXT file will be generated and saved to your device.
 
 ## Technologies Used
 
@@ -59,19 +60,20 @@ La aplicación Plots XY es ideal para crear bosquejos de gráficas XY a partir d
 
 ## ¿Qué se puede hacer con Plots XY?
 
-- Crear gráficas XY: Ingresa tus puntos de datos y visualízalos en una gráfica.
+- Crear gráficas XY: Ingrese sus puntos de datos y visualícelos en una gráfica 2D.
 - Definir las etiquetas de los ejes X e Y, y utilizarlos para el gráfico, la ecuación lineal y los datos a descargar.
 - Agregar líneas de tendencia: Utiliza regresión lineal o polinómica para calcular y mostrar líneas de tendencia en la gráfica.
-- Descargar datos: Guarda tus datos en formato TXT para análisis adicional o compartirlos.
+- Descargar datos: Guarde sus datos en formato TXT para un análisis posterior o compartirlos.
 
 ## Instrucciones
 
-1. Ingresa las magnitudes y unidades a estudiar como etiquetas de los ejes X e Y.
-2. Ingresa tus puntos de datos en los campos proporcionados.
-3. Haz clic en el botón "Graficar" para visualizar tus datos en la gráfica.
-4. Opcionalmente, haz clic en el botón "Agregar línea de tendencia" para calcular y mostrar una línea de tendencia utilizando regresión lineal.
-5. Si la correlación entre X e Y no es lineal, puedes probar el ajuste polinómico con el botón "Curva Suave".
-6. Para descargar tus datos, haz clic en el botón "Descargar datos" y se generará un archivo TXT que se guardará en tu dispositivo.
+1. Abra la aplicación en cualquier navegador: [Plots XY](https://fisicamaldonado.github.io/graficas/)
+2. Ingrese las magnitudes y unidades a estudiar como etiquetas de los ejes X e Y.
+3. Ingrese los puntos de datos en los campos proporcionados.
+4. Presione el botón "Graficar" para visualizar los datos en la gráfica.
+5. Opcionalmente, presione el botón "Agregar línea de tendencia" para calcular y mostrar una línea de tendencia utilizando regresión lineal.
+6. Si la correlación entre X e Y no es lineal, puede probar el ajuste polinómico con el botón "Curva Suave".
+7. Para descargar los datos, utilice el botón "Descargar datos" y se generará un archivo TXT que se guardará en su dispositivo.
 
 ## Tecnologías utilizadas
 
@@ -85,7 +87,7 @@ Este proyecto está bajo la licencia [MIT License](LICENSE).
 
 ## Contribuciones
 
-¡Las contribuciones son bienvenidas! Si tienes ideas, sugerencias o correcciones de errores, por favor abre un issue o envía un pull request.
+¡Las contribuciones son bienvenidas! Si tiene ideas, sugerencias o correcciones de errores, por favor abra un issue o envíe un pull request.
 
 ## Agradecimientos
 
@@ -95,5 +97,5 @@ Este proyecto está bajo la licencia [MIT License](LICENSE).
 
 ## Contacto
 
-Si tienes alguna pregunta, sugerencia o comentario, no dudes en contactarme a través de fisicamaldonado.vaz@gmail.com.
-Gracias por tu apoyo.
+Si tiene alguna pregunta, sugerencia o comentario, no dude en contactarme a través de fisicamaldonado.vaz@gmail.com.
+Gracias por su apoyo!
