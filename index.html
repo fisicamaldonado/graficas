@@ -324,7 +324,7 @@ function plotLine() {
     var m = (numPoints * sumXY - sumX * sumY) / (numPoints * sumXSquared - sumX * sumX);
     var n = (sumY - m * sumX) / numPoints;
 
-    if (m < 0.01){
+    if (Math.abs(m) < 0.1){
       decimals = 5;
     } 
     m = parseFloat(m.toFixed(decimals));
@@ -406,7 +406,7 @@ function Exponential() {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    if (A_0 < 0.01 || k<0.01){
+    if (A_0 < 0.1 || Math.abs(k)<0.1){
       decimals = 5;
     } 
     A_0 = parseFloat(A_0.toFixed(decimals));
@@ -458,7 +458,7 @@ function NotLinearTrend() {
     var b = coefficients.b;
     var c = coefficients.c;
 
-    if (c < 0.01){
+    if (Math.abs(c) < 0.1){
       decimals = 5;
     }
 
