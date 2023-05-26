@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Plots XY - Science Graphs</title>
-    <meta name="description" content="Plots XY ofrece gráficos interactivos y herramientas de visualización para análisis de datos. Ideal para prácticas de ciencias en Secundaria y primeros años universitarios.">
+    <meta name="description" content="Plots XY provides interactive charts and visualization tools for data analysis. Ideal for science experiments in secondary schools and early university years.">
     <meta name="google-site-verification" content="1psBQTzJBgx9fHWgpllgWjbrcEWHsjlsgn5J0C7KF_4" />
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -11,15 +11,15 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-<h1 style="font-weight:bold; color: rgb(43, 43, 43);">Plots XY</h1>
-<h2>2D Plots for Science Lab</h2>
+<h1 style="font-weight:bold; color: #204a4c;">PLOTS XY</h1>
+<h2 style=" color: rgb(61, 61, 61);">2D Plots for Science Lab</h2>
 <div style="text-align: right;">
-    <button type="button" class="btn btn-primary" onclick="window.location.href='index.html'">ESP</button>
+    <button style="background-color: #377A7E; border-color:#2c5b5e;" type="button" class="btn btn-primary" onclick="window.location.href='index.html'">ESP</button>
   </div>
 <h3>How it works?</h3>
 <p>After setting the axis labels, enter the x and y data in the table. Press "Enter" to generate more rows. When finished, click the "Confirm data" button to verify and plot the entered data. Please refer to the tutorial if necessary.</p>
 <p>[Important] Currently, the application only supports positive (x,y) inputs, which will be useful for sketching graphs in most Science laboratory experiments. </p>
-<button type="button" class="btn btn-primary" onclick="window.location.href='https://github.com/fisicamaldonado/graficas/blob/main/README.md'">Tutorial</button>
+<button style="background-color: #377A7E; border-color:#2c5b5e;" type="button" class="btn btn-primary" onclick="window.location.href='https://github.com/fisicamaldonado/graficas/blob/main/README.md'">Tutorial</button>
 <p></p>
 <form id="dataForm">
   <div id="tableContainerLabels">
@@ -38,7 +38,7 @@
       </tbody>
     </table>
   </div>
-  <button id= "axisButton" type="button" onclick="asignarEjes()" class="btn btn-primary">Assign Labels</button>
+  <button style="background-color: #377A7E; border-color:#2c5b5e;" id= "axisButton" type="button" onclick="asignarEjes()" class="btn btn-primary">Assign Labels</button>
   <p></p> 
   <div id="tableContainer">
     <table>
@@ -52,9 +52,9 @@
     </table>
     </div>
     <div>
-      <button type="button" id="botonEliminar" onclick="eliminarFila()" class="btn btn-primary" style="display: none;">Delete Row</button>
+      <button style="background-color: #377A7E; border-color:#2c5b5e; display: none;" type="button" id="botonEliminar" onclick="eliminarFila()" class="btn btn-primary">Delete Row</button>
     </div>
-  <button type="submit" id="submitButton" class="btn btn-primary">Confirm Data</button>
+  <button style="background-color: #377A7E; border-color:#2c5b5e;" type="submit" id="submitButton" class="btn btn-primary">Confirm Data</button>
 </form>
     
 <div class="mt-4">
@@ -65,20 +65,20 @@
 <canvas id="chartCanvas" width="360" height="360"></canvas>
 </div>
 <p id="trendTypes" style="display: none;">Trend lines:</p>
-<button type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary" style="display: none;">Linear</button>
-<button  id="trendButton" onclick="NotLinearTrend()" class="btn btn-primary" style="display: none;">Polynomial</button>
-<button  id="expTrendButton" onclick="Exponential()" class="btn btn-primary" style="display: none;">Exponential</button>
+<button style="background-color: #377A7E; border-color:#2c5b5e; display: none;" type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary">Linear</button>
+<button style="background-color: #377A7E; border-color:#2c5b5e; display: none;"  id="trendButton" onclick="NotLinearTrend()" class="btn btn-primary">Polynomial</button>
+<button style="background-color: #377A7E; border-color:#2c5b5e; display: none;"  id="expTrendButton" onclick="Exponential()" class="btn btn-primary">Exponential</button>
 <p></p>
 <p id="textFunction" style="display: none;">The curve function is: </p>
 <p class='centered' style="font-family: JetBrains Mono, monospace; display: none;" id ="trendFunction">linealFunctionText</p>
 
 <p id="descarga_parrafo" style="display: none;">If desired, click the "Download Data" button to save the "data.txt" file in your device.</p>
-<button type="button" id="downloadButton" onclick="downloadData()" class="btn btn-primary" style="display: none;">Download Data</button>
-<button onclick="location.reload();" class="btn btn-primary">Reset</button>
+<button style="background-color: #377A7E; border-color:#2c5b5e; display: none;" type="button" id="downloadButton" onclick="downloadData()" class="btn btn-primary" style="display: none;">Download Data</button>
+<button style="background-color: #377A7E; border-color:#2c5b5e;" onclick="location.reload();" class="btn btn-primary">Reset</button>
 <p></p>
-<p class='centered'>(c)2023 - Prof. Pablo Vaz</p>
-<a href="https://fisicamaldonado.wordpress.com" target="_blank"><p class='centered'>fisicamaldonado.wordpress.com</p></a>
-<p class='centered'>Maldonado - Uruguay</p>
+<p class='centered' style="font-weight:bold; color:rgb(61, 61, 61);">(c)2023 - Prof. Pablo Vaz</p>
+<a href="https://fisicamaldonado.wordpress.com" target="_blank"><p class='centered' style="font-weight:bold; color:#377A7E;">fisicamaldonado.wordpress.com</p></a>
+<p class='centered'style="font-weight:bold; color: rgb(61, 61, 61);">Maldonado - Uruguay</p>
 <a href="https://info.flagcounter.com/VsgQ" class="centered"><img src="https://s01.flagcounter.com/count/VsgQ/bg_FFFFFF/txt_000000/border_CCCCCC/columns_4/maxflags_12/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a>   
 <script>
 
