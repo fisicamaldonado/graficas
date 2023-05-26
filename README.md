@@ -62,7 +62,7 @@ Prof. Pablo Vaz - Maldonado, Uruguay.
 
 # Plots XY - Gráficas para el Laboratorio de Ciencias
 
-La aplicación Plots XY es ideal para crear bosquejos de gráficas XY a partir de los datos proporcionados. Permite además agregar líneas de tendencia (Lineal, Polinómica, Exponentcial) y descargar los datos en formato TXT.
+La aplicación Plots XY es ideal para crear bosquejos de gráficas XY a partir de los datos proporcionados. Permite además agregar líneas de tendencia (Lineal, Polinómica, Exponencial) y descargar los datos en formato TXT.
 
 **Este proyecto está actualmente en construcción y se planean agregar más funcionalidades en el futuro.**
 
