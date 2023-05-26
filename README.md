@@ -75,6 +75,8 @@ La aplicación Plots XY es ideal para crear bosquejos de gráficas XY a partir d
 
 ## Instrucciones
 
+Puede acceder al tutorial en YouTube (en Español) -> [YouTube Tutorial](https://youtu.be/w5Aml5HAUe8)
+
 1. Abra la aplicación en cualquier navegador: [Plots XY](https://fisicamaldonado.github.io/graficas/)
 2. Ingrese las magnitudes y unidades a estudiar como etiquetas de los ejes X e Y.
 3. Ingrese los puntos de datos en los campos proporcionados.
