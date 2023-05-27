@@ -17,7 +17,7 @@ The Plots XY app allows users to create sketches of XY graphs based on provided 
 
 ## Usage
 
-1. Open the app in any web browser: [Plots XY](https://fisicamaldonado.github.io/graficas/english.html)
+1. Open the app in any web browser: [Plots XY](https://plots-xy.com/english.html)
 2. Input the X and Y Axis labels and click assign labels.
 3. Input your data points in the provided form fields.
 4. Click on the "Confirm Data" button to visualize your data on the graph.
@@ -77,7 +77,7 @@ La aplicación Plots XY es ideal para crear bosquejos de gráficas XY a partir d
 
 Puede acceder al tutorial en YouTube (en Español) -> [YouTube Tutorial](https://youtu.be/w5Aml5HAUe8)
 
-1. Abra la aplicación en cualquier navegador: [Plots XY](https://fisicamaldonado.github.io/graficas/)
+1. Abra la aplicación en cualquier navegador: [Plots XY](https://plots-xy.com/)
 2. Ingrese las magnitudes y unidades a estudiar como etiquetas de los ejes X e Y.
 3. Ingrese los puntos de datos en los campos proporcionados.
 4. Presione el botón "Confirmar Datos" para visualizar los datos en la gráfica.
