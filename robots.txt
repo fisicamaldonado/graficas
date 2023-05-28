@@ -1,0 +1,9 @@
+# Hello my dear friend robot crawler, please go easy with my app. It's for educational purpose. Thanks!
+# Created by Prof. Pablo Vaz - Maldondo - Uruguay
+
+Sitemap: https://plots-xy.com/sitemap.xml
+
+User-Agent: *
+Disallow: /plots_icons/
+Disallow: /README.md
+Disallow: /LICENSE*
