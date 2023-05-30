@@ -1,10 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:200,400');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600&display=swap');
+
 h1,h2 {
     text-align: center;
+    font-family: 'Rajdhani', sans-serif;
+}
+h1{
+    font-size: 80px;
+    color: #26585b;
+}
+h3 {
+    font-family: 'Rajdhani', sans-serif;
 }
 body {
-    font-family: Arial, sans-serif;
-    margin: 5px;
-    font-size: 1.1rem;
+    font-family: 'Nunito', sans-serif;
+    margin: 10px;
+    font-size: 1.2rem;
 }
 form {
     width: 100%;

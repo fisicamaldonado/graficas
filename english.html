@@ -2,15 +2,16 @@
 <html>
 <head>
     <title>Plots XY - Science Graphs</title>
-    <meta name="description" content="Plots XY provides interactive charts and visualization tools for data analysis. Ideal for science experiments in secondary schools and early university years.">
-     <meta charset="UTF-8">
+    <meta name="description" lang = "en" content="With XY Plots, you can easily create graphs from X,Y data tables. It also provides curve fitting and presentation of their functions. It is ideal for Science experiments in secondary school and early university years. Developed by Physics professor Pablo Vaz.">
+    <meta name="description" lang="es" content="Con Plots XY se pueden crear gráficas a partir de tablas de datos X,Y de forma muy sencilla. Ofrece además curvas de ajuste y presentación de sus funciones. Es ideal para prácticas de Ciencias en Secundaria y primeros años universitarios. Desarrollada por el profesor de Física Pablo Vaz.">
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-<h1 style="font-weight:bold; color: #204a4c;">PLOTS XY</h1>
+<h1>PLOTS XY</h1>
 <div style="display: flex; gap: 5px; justify-content: center;">
   <img src="plots_icons/carrito.png" alt="Imagen 1">
   <img src="plots_icons/matraz.png" alt="Imagen 2">
@@ -23,10 +24,11 @@
     <button style="background-color: #377A7E; border-color:#2c5b5e;" type="button" class="btn btn-primary" onclick="window.location.href='index.html'">ESP</button>
   </div>
 <h3>How it works?</h3>
-<p>After setting the axis labels, enter the x and y data in the table. Press "Enter" to generate more rows. When finished, click the "Confirm data" button to verify and plot the entered data. Please refer to the Youtube or Github tutorials if necessary.</p>
+<p>After setting the axis labels, enter the x and y data in the table. Press "Enter" to generate more rows. When finished, click the "Confirm data" button to verify and plot the entered data. Please refer to the YouTube or Github tutorials if necessary.</p>
+<button type="button" class="btn btn-primary" onclick="window.open('https://youtu.be/w5Aml5HAUe8', '_blank')" style=" background-color: #377A7E; border-color:#2c5b5e;" target="_blank">Tutorial Youtube</button>
+<button type="button" class="btn btn-primary" onclick="window.open('https://github.com/fisicamaldonado/graficas#readme', '_blank')" style="background-color: #377A7E; border-color:#2c5b5e;" target="_blank">Github</button>
+<p></p>
 <p>[Important] Currently, the application only supports positive (x,y) inputs, which will be useful for sketching graphs in most Science laboratory experiments. </p>
-<button style="background-color: #377A7E; border-color:#2c5b5e;" type="button" class="btn btn-primary" onclick="window.location.href='https://github.com/fisicamaldonado/graficas/blob/main/README.md'">Youtube Tutorial</button>
-<button type="button" class="btn btn-primary" onclick="window.location.href='https://github.com/fisicamaldonado/graficas'" style="background-color: #377A7E; border-color:#2c5b5e;">Github</button>
 <p></p>
 <form id="dataForm">
   <div id="tableContainerLabels">
@@ -45,6 +47,7 @@
       </tbody>
     </table>
   </div>
+  <p></p>
   <button style="background-color: #377A7E; border-color:#2c5b5e;" id= "axisButton" type="button" onclick="asignarEjes()" class="btn btn-primary">Assign Labels</button>
   <p></p> 
   <div id="tableContainer">
@@ -61,6 +64,7 @@
     <div>
       <button style="background-color: #377A7E; border-color:#2c5b5e; display: none;" type="button" id="botonEliminar" onclick="eliminarFila()" class="btn btn-primary">Delete Row</button>
     </div>
+    <p></p>
   <button style="background-color: #377A7E; border-color:#2c5b5e;" type="submit" id="submitButton" class="btn btn-primary">Confirm Data</button>
 </form>
     
@@ -83,12 +87,12 @@
 <button style="background-color: #377A7E; border-color:#2c5b5e; display: none;" type="button" id="downloadButton" onclick="downloadData()" class="btn btn-primary" style="display: none;">Download Data</button>
 <button style="background-color: #377A7E; border-color:#2c5b5e;" onclick="location.reload();" class="btn btn-primary">Reset</button>
 <p></p>
-<p class='centered' style="font-weight:bold; color:rgb(61, 61, 61);">(c)2023 - Prof. Pablo Vaz</p>
-<p class='centered'style="font-weight:bold; color: rgb(61, 61, 61);">Maldonado - Uruguay</p>
 <a href="https://www.amazon.com/dp/B086PN2L63" target="_blank"><p class='centered' style="font-weight:bold; color:#377A7E;">Would you like to support my work? Thanks!</p></a>
 <div style="display: flex; justify-content: center;">
-<a href="https://www.amazon.com/dp/B086PN2L63" class="centered" target="_blank"><img style = "width: 100%; max-width: 400px; height: auto;" src="plots_icons/studyingphysics.gif" alt="banner_en"></a>
+<a href="https://www.amazon.com/dp/B086PN2L63" class="centered" target="_blank"><img style = "width: 100%; max-width: 400px; height: auto;" src="plots_icons/banner_eng.gif" alt="banner_en"></a>
 </div>
+<p></p>
+<p class='centered' style="font-weight:bold; color:rgb(61, 61, 61);">(c)2023 Pablo Vaz - Maldonado, Uruguay</p>
 <script>
 
 //Define some global variables
