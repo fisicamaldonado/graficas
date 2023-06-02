@@ -111,26 +111,24 @@ createDataRow(1);// Crear una fila inicial al cargar la página
 // Generar las filas de la tabla y desabilitar el botón "Confirmar datos" al presionarlo
 document.getElementById('dataForm').addEventListener('submit', function(event) {
     event.preventDefault();
+    showSuccessTable();
+    document.getElementById("textFunction").style.display = "none";//Esto oculta la función si se modifican los datos
+    document.getElementById("trendFunction").style.display = "none";
     if (isGraphGenerated) return;
 
     isGraphGenerated = true;
-    document.getElementById('submitButton').disabled = true;
-    document.getElementById('botonEliminar').style.display = 'none';
-    document.getElementById('axisButton').style.display = 'none';
-    document.getElementById('tableContainerLabels').style.display = 'none';
-    document.getElementById('tableContainer').style.display = 'none';
     document.getElementById('successMessage').style.display = 'block';
     document.getElementById("descarga_parrafo").style.display = "block";
-    showSuccessTable();
     document.getElementById('downloadButton').style.display = 'inline-block';
     document.getElementById('trendButton').style.display = 'inline-block';
     document.getElementById('expTrendButton').style.display = 'inline-block';
     document.getElementById("trendTypes").style.display = 'block';
+    
 });
 
 // Agregar nuevas filas al presionar Enter en los campos de entrada
 document.getElementById('dataForm').addEventListener('keydown', function(event) {
-    if (isGraphGenerated || event.key !== 'Enter') return;
+    if (event.key !== 'Enter') return;
 
     event.preventDefault();
     var numPoints = document.getElementById('dataInputs').getElementsByTagName('tr').length;
@@ -196,6 +194,9 @@ function showSuccessTable() {
     var xValues = [];
     var yValues = [];
     points = [];
+
+    var successTable = document.getElementById('successTable');
+    successTable.innerHTML = ''; // Eliminar el contenido de la tabla anterior si hay modificaciones
 
     var rows = document.getElementById('dataInputs').getElementsByTagName('tr');
     var tableBody = successTable.createTBody();
