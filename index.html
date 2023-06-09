@@ -37,19 +37,18 @@
       <thead>
         <tr>
           <th class="centered">Etiqueta eje X</th>
-          <th class="centered">Etiqueta eje Y</th>
-        </tr>
+          <th class="centered">Etiqueta eje Y</th></tr>
       </thead>
       <tbody>
         <tr>
-          <td><input type="text" id="labelX" name="labelX" autocomplete="off"></td>
-          <td><input type="text" id="labelY" name="labelY" autocomplete="off"></td>
+          <td><input type="text" id="labelX" name="labelX" autocomplete="off" oninput="validarCampos()"></td>
+          <td><input type="text" id="labelY" name="labelY" autocomplete="off" oninput="validarCampos()"></td>
         </tr>
       </tbody>
     </table>
   </div>
   <p></p>
-  <button style="background-color: #377A7E; border-color:#2c5b5e;" id= "axisButton" type="button" onclick="asignarEjes()" class="btn btn-primary">Asignar ejes</button>
+  <button style="background-color: #377A7E; border-color:#2c5b5e;" id= "axisButton" type="button" onclick="asignarEjes()" class="btn btn-primary" disabled>Asignar ejes</button>
   <p></p> 
   <div id="tableContainer">
     <table>
@@ -94,6 +93,7 @@
 <p></p>
 <p class='centered' style="font-weight:bold; color:rgb(61, 61, 61);">(c)2023 Pablo Vaz - Maldonado, Uruguay</p>
 <script>
+
 var decimals = 2;
 var labelX = 'x';
 var labelY = 'y';
@@ -135,12 +135,39 @@ document.getElementById('dataForm').addEventListener('keydown', function(event) 
     createDataRow(numPoints + 1);
     toggleBotonEliminar();
 });
-function asignarEjes() {
-  labelX = document.getElementById('labelX').value;
-  labelY = document.getElementById('labelY').value;
-  document.getElementById('tablaEncabezadoX').innerText = labelX;
-  document.getElementById('tablaEncabezadoY').innerText = labelY;
-}
+
+//Validación del texto de entrada en labels
+
+function validarCampos() {
+    var labelX = document.getElementById('labelX').value;
+    var labelY = document.getElementById('labelY').value;
+    var boton = document.getElementById('axisButton');
+
+    if (labelX.trim() !== '' && labelY.trim() !== '' && validarEntradaTexto(labelX) && validarEntradaTexto(labelY)) {
+      boton.disabled = false;
+    } else {
+      boton.disabled = true;
+    }
+  }
+
+  function validarEntradaTexto(texto) {
+    var patron = /^[a-zA-ZáéíóúñÁÉÍÓÚ()0-9]+$/;
+    return patron.test(texto);
+  }
+
+  function asignarEjes() {
+    var labelX = document.getElementById('labelX').value;
+    var labelY = document.getElementById('labelY').value;
+
+    if (validarEntradaTexto(labelX) && validarEntradaTexto(labelY)) {
+    document.getElementById('tablaEncabezadoX').innerText = labelX;
+    document.getElementById('tablaEncabezadoY').innerText = labelY;
+  } else {
+    // El texto contiene caracteres no permitidos.
+    labelX = 'x';
+    labelY = 'y';
+  }
+  }
 
 //El botón de eliminar filas solo será visible cuando éstas sean mayores a 1
 function toggleBotonEliminar() {
