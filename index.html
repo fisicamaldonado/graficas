@@ -139,8 +139,8 @@ document.getElementById('dataForm').addEventListener('keydown', function(event) 
 //Validación del texto de entrada en labels
 
 function validarCampos() {
-    var labelX = document.getElementById('labelX').value;
-    var labelY = document.getElementById('labelY').value;
+    labelX = document.getElementById('labelX').value;
+    labelY = document.getElementById('labelY').value;
     var boton = document.getElementById('axisButton');
 
     if (labelX.trim() !== '' && labelY.trim() !== '' && validarEntradaTexto(labelX) && validarEntradaTexto(labelY)) {
@@ -151,7 +151,7 @@ function validarCampos() {
   }
 
   function validarEntradaTexto(texto) {
-    var patron = /^[a-zA-ZáéíóúñÁÉÍÓÚ()0-9]+$/;
+    var patron = /^[a-zA-ZáéíóúñÁÉÍÓÚ%()0-9]+$/;
     return patron.test(texto);
   }
 
@@ -162,11 +162,11 @@ function validarCampos() {
     if (validarEntradaTexto(labelX) && validarEntradaTexto(labelY)) {
     document.getElementById('tablaEncabezadoX').innerText = labelX;
     document.getElementById('tablaEncabezadoY').innerText = labelY;
-  } else {
-    // El texto contiene caracteres no permitidos.
-    labelX = 'x';
-    labelY = 'y';
-  }
+    } else {
+      // El texto contiene caracteres no permitidos.
+      labelX = 'x';
+      labelY = 'y';
+    }
   }
 
 //El botón de eliminar filas solo será visible cuando éstas sean mayores a 1

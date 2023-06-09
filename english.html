@@ -141,8 +141,8 @@ document.getElementById('dataForm').addEventListener('keydown', function(event) 
 //Label Text validation
 
 function validarCampos() {
-    var labelX = document.getElementById('labelX').value;
-    var labelY = document.getElementById('labelY').value;
+    labelX = document.getElementById('labelX').value;
+    labelY = document.getElementById('labelY').value;
     var boton = document.getElementById('axisButton');
 
     if (labelX.trim() !== '' && labelY.trim() !== '' && validarEntradaTexto(labelX) && validarEntradaTexto(labelY)) {
@@ -153,7 +153,7 @@ function validarCampos() {
   }
 
   function validarEntradaTexto(texto) {
-    var patron = /^[a-zA-ZáéíóúñÁÉÍÓÚ()0-9]+$/;
+    var patron = /^[a-zA-ZáéíóúñÁÉÍÓÚ%()0-9]+$/;
     return patron.test(texto);
   }
 
@@ -164,11 +164,11 @@ function validarCampos() {
     if (validarEntradaTexto(labelX) && validarEntradaTexto(labelY)) {
     document.getElementById('tablaEncabezadoX').innerText = labelX;
     document.getElementById('tablaEncabezadoY').innerText = labelY;
-  } else {
-    // Not allowed characters.
-    labelX = 'x';
-    labelY = 'y';
-  }
+    } else {
+      // Not allowed characters.
+      labelX = 'x';
+      labelY = 'y';
+    }
   }
 
 //Delete button is shown only when rows > 1
