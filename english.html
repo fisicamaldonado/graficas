@@ -154,7 +154,7 @@ function validarCampos() {
   }
 
   function validarEntradaTexto(texto) {
-    var patron = /^[a-zA-ZáéíóúñÁÉÍÓÚ%()/^0-9]+$/;
+    var patron = /^[a-zA-ZáéíóúñÁÉÍÓÚ%()\/^0-9.-]+$/;
     return patron.test(texto);
   }
 
