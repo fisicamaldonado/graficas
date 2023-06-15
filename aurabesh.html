@@ -8,29 +8,33 @@
     <meta name="keywords" content="physics, chemistry, math, graphs, science, plot, regression, linear, polynomial, exponential, scatter, data, pablo, vaz, fisicamaldonado">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="aurabesh.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
 <h1>PLOTS XY</h1>
-<div style="display: flex; gap: 5px; justify-content: center;">
-  <img src="plots_icons/carrito.png" alt="Imagen 1">
-  <img src="plots_icons/matraz.png" alt="Imagen 2">
-  <img src="plots_icons/graph.png" alt="Imagen 3">
-  <img src="plots_icons/oscilator.png" alt="Imagen 4">
-  <img src="plots_icons/circuits.png" alt="Imagen 5">
+<h1 id="h1-special">D S O</h1>
+<p></p>
+<div style="text-align: center;">
+  <h2 id="h2-special">A</h2>
+  <h2> Plots-XY in a far, far away galaxy... </h2>
+  <h2 id="h2-special">X</h2>
 </div>
-<h2 style=" color: rgb(61, 61, 61);">2D Plots for Science Lab</h2>
 <div style="text-align: right;">
-    <button style="background-color: #377A7E; border-color:#2c5b5e;" type="button" class="btn btn-primary" onclick="window.location.href='index.html'">ESP</button>
-    <button style="background-color: #377A7E; border-color:#2c5b5e;" type="button" class="btn btn-primary" onclick="window.location.href='aurabesh.html'">AUR</button>
-  </div>
+    <button id="button-lang" style="background-color: #377A7E; border-color:#2c5b5e;" type="button" class="btn btn-primary" onclick="window.location.href='index.html'">ESP</button>
+    <button id="button-lang" type="button" class="btn btn-primary" onclick="window.location.href='english.html'" style="font-weight: bold; background-color: #377A7E; border-color:#2c5b5e;">ENG</button>
+</div>
+<p></p>
+<h3 id="h3-special">Y</h3>
 <h3>How it works?</h3>
+<h3 id="h3-special">F</h3>
 <p>After setting the axis labels, enter the x and y data in the table. Press "Enter" to generate more rows. When finished, click the "Confirm data" button to verify and plot the entered data. Please refer to the YouTube or Github tutorials if necessary.</p>
 <button type="button" class="btn btn-primary" onclick="window.open('https://youtu.be/SFxqqsRyVZU', '_blank')" style=" background-color: #377A7E; border-color:#2c5b5e;" target="_blank">Tutorial Youtube</button>
 <button type="button" class="btn btn-primary" onclick="window.open('https://github.com/fisicamaldonado/graficas#readme', '_blank')" style="background-color: #377A7E; border-color:#2c5b5e;" target="_blank">Github</button>
 <p></p>
 <p>[Important] Currently, the application only supports positive (x,y) inputs, which will be useful for sketching graphs in most Science laboratory experiments. </p>
+<p></p>
+<h3 id="h3-special">L m q r t U V y</h3>
 <p></p>
 <form id="dataForm">
   <div id="tableContainerLabels">
@@ -73,6 +77,9 @@
 <div class="mt-4">
     <p id="successMessage" style="display: none;">Points entered successfully! Please verify that the data is correct in the next table.</p>
     <table id="successTable" class="table table-bordered" style="display: none;"></table>
+  </div>
+<div class="centered">
+    <h3 id="h3-special"> p s 3 7 k 0 J</h3>
 </div>
 <div class="container">
 <canvas id="chartCanvas" width="360" height="360"></canvas>
@@ -94,7 +101,10 @@
 <a href="https://www.amazon.com/dp/B086PN2L63" class="centered" target="_blank"><img style = "width: 100%; max-width: 400px; height: auto;" src="plots_icons/banner_eng.gif" alt="banner_en"></a>
 </div>
 <p></p>
-<p class='centered' style="font-weight:bold; color:rgb(61, 61, 61);">(c)2023 Pablo Vaz - Maldonado, Uruguay</p>
+<p class='centered' style="font-weight:bold; color:#ca59ed;">(c)2023 Pablo Vaz - Maldonado, Uruguay</p>
+<div class="centered">
+  <h3 id="h3-special" style="color:#ca59ed;"> r o j 2 4 5 6</h3>
+</div>
 <script>
 
 //Define some global variables
@@ -293,7 +303,7 @@ function drawChart() {
     var maxY = Math.max(...points.map(point => point.y));
 
     ctx.beginPath();
-    ctx.strokeStyle = '#282c34';
+    ctx.strokeStyle = 'aquamarine';
     ctx.moveTo(margin, chartCanvas.height - margin);
     ctx.lineTo(margin, margin);
     ctx.lineTo(margin - 5, margin + 10); // Arrows
@@ -318,6 +328,7 @@ function drawChart() {
         ctx.moveTo(margin - 5, chartCanvas.height - margin - i * segmentLengthY);
         ctx.lineTo(margin + 5, chartCanvas.height - margin - i * segmentLengthY);
 
+        ctx.fillStyle = "aquamarine";
         ctx.font = '10px Arial';
         ctx.textAlign = 'center';
         ctx.fillText(divisionX.toFixed(2), margin + i * segmentLengthX, chartCanvas.height - margin + 15);
@@ -333,7 +344,7 @@ function drawChart() {
 
         ctx.beginPath();
         ctx.arc(xCoord, yCoord, 3, 0, 2 * Math.PI);
-        ctx.fillStyle = 'red';
+        ctx.fillStyle = "aquamarine";
         ctx.fill();
         ctx.stroke();
     }
@@ -341,7 +352,7 @@ function drawChart() {
     // Add axis
     ctx.font = '12px Arial';
     ctx.textAlign = 'end';
-    ctx.fillStyle = '#282c34';
+    ctx.fillStyle = "aquamarine";
     ctx.fillText('0', margin - 5, chartCanvas.height - margin + 15);
     ctx.fillText(labelX, chartCanvas.width - margin/2, chartCanvas.height - margin/4);
     ctx.textAlign = 'start';
@@ -387,7 +398,7 @@ function plotLine() {
     ctx.beginPath();
     ctx.moveTo(xStart, yStart);
     ctx.lineTo(xEnd, yEnd);
-    ctx.strokeStyle = 'blue';
+    ctx.strokeStyle = '#ca59ed';
     ctx.lineWidth = 2;
     ctx.stroke();
 

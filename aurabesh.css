@@ -1,0 +1,124 @@
+@import url('https://fonts.cdnfonts.com/css/aurebesh');
+@import url('https://fonts.cdnfonts.com/css/galaxy-far-far-away');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nunito:200,400');
+
+h1 {
+    text-align: center;
+    font-family: 'Aurebesh', sans-serif;
+    color: rgb(102, 104, 247);
+}
+h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    font-family: 'Rajdhani', sans-serif;
+    color: rgb(102, 104, 247);
+    display: inline-block;
+}
+#h2-special{
+    font-family: 'Galaxy Far Far Away',sans-serif;
+    display:inline-block;
+    text-align: center;
+}
+#h1-special {
+    text-align: center;
+    font-family: 'Galaxy Far Far Away', sans-serif;
+    color: rgb(255, 225, 75);
+}
+#h3-special {
+    font-family: 'Galaxy Far Far Away', sans-serif;
+    color: aquamarine;
+    display: inline-block;
+}
+h1{
+    font-size: 80px;
+}
+h3 {
+    font-family: 'Aurebesh', sans-serif;
+    color: aquamarine;
+    display: inline-block;
+}
+
+body {
+    /*font-family: 'Nunito', sans-serif;*/
+    font-family: 'Aurebesh', sans-serif;
+    margin: 10px;
+    font-size: 1.2rem;
+    color:aquamarine;
+    background-color: rgb(0, 0, 0);
+}
+
+form {
+    width: 100%;
+    max-width: 400px; 
+    margin: 5px;
+    color: aqua;
+    border-color: aqua;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 400px;
+    color:aquamarine;
+    border-color: aquamarine;
+}
+table input {
+    background-color: #292929;
+    color: aquamarine;
+  }
+th,
+td {
+    border: 1px solid aquamarine;
+    padding: 2px;
+}
+input {
+    width: 95%;
+    box-sizing: border-box;
+    margin: 1px 5px;
+}
+button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin: 5px;
+    /*font-family: 'Nunito', sans-serif;*/
+    font-family: 'Aurebesh', sans-serif;
+    
+}
+#button-lang {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin: 5px;
+    font-family: 'Nunito', sans-serif;
+    
+}
+
+#successTable {
+    color: aquamarine;
+    background-color: #292929;
+    border-color: #62a8ac;
+  }
+canvas {
+    border: 2px solid #ca59ed;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #000000;
+}
+p{
+    text-align: justify;
+}
+p.centered {
+    text-align: center;
+}
+
+#tableContainer {
+width: 100%;
+max-width: 400px;
+}
+.centered {
+    text-align: center;
+}
+a.centered{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
