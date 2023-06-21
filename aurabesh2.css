@@ -1,0 +1,144 @@
+@import url('https://fonts.cdnfonts.com/css/aurebesh');
+@import url('https://fonts.cdnfonts.com/css/galaxy-far-far-away');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nunito:200,400');
+@import url('https://fonts.cdnfonts.com/css/robots-revenge');
+@import url('https://fonts.cdnfonts.com/css/incheon-nights');
+
+.logo {
+    max-width: 600px;
+    width: 100%;
+    height: auto;
+  }
+h1 {
+    text-align: center;
+    font-family: 'Aurebesh', sans-serif;
+    color: rgb(182,160,80);
+}
+h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-family: 'Aurebesh', sans-serif;
+    color: rgb(182,160,80);
+    display: inline-block;
+}
+#h2-special{
+    font-family: 'Galaxy Far Far Away',sans-serif;
+    display:inline-block;
+    text-align: center;
+    font-size: 1.5rem;
+}
+#h1-special {
+    text-align: center;
+    font-family: 'Galaxy Far Far Away', sans-serif;
+    color: rgb(182,160,80);
+}
+#h3-special {
+    font-family: 'Galaxy Far Far Away', sans-serif;
+    color: rgb(182,160,80);
+    display: inline-block;
+}
+h1{
+    font-size: 80px;
+}
+h3 {
+    font-family: 'Aurebesh', sans-serif;
+    color: rgb(182,160,80);
+    display: inline-block;
+}
+
+body {  
+    font-family: 'Robots Revenge', sans-serif;
+    margin: 10px;
+    font-size: 1.2rem;
+    color: rgb(182,160,80);
+    background-color: rgb(255, 255, 255);
+}
+
+form {
+    width: 100%;
+    max-width: 400px; 
+    margin: 5px;
+    color: rgb(182,160,80);
+    color: rgb(182,160,80);
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 400px;
+    color: rgb(182,160,80);
+    border-color: rgb(182,160,80);
+}
+table input {
+    background-color: rgb(255, 245, 209);
+    color: rgb(182,160,80);
+    font-family: 'Incheon Nights', sans-serif;
+  }
+th,
+td {
+    border: 1px solid rgb(182,160,80);
+    padding: 2px;
+}
+input {
+    width: 95%;
+    box-sizing: border-box;
+    margin: 1px 5px;
+}
+button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin: 5px;
+    font-family: 'Incheon Nights', sans-serif;
+    color: rgb(159, 140, 71);
+                                                
+}
+button:active,
+button:focus {
+    outline: none;
+    border-color: rgb(130, 114, 58);
+  }
+#button-lang {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin: 5px;
+    font-family: 'Incheon Nights', sans-serif;
+                                                
+    
+}
+
+#successTable {
+    color: rgb(182,160,80);
+    background-color: rgb(251, 246, 228);
+    border-color: #62a8ac;
+    font-family: 'Incheon Nights', sans-serif;
+  }
+canvas {
+    border: 2px solid rgb(182,160,80);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(255, 250, 232);
+}
+p{
+    text-align: justify;
+}
+p.centered {
+    text-align: center;
+}
+
+p.credits{
+    font-family: 'Aurebesh', sans-serif;
+    text-align: center;
+}
+
+#tableContainer {
+width: 100%;
+max-width: 400px;
+}
+.centered {
+    text-align: center;
+}
+a.centered{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

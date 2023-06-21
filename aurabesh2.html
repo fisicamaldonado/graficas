@@ -8,7 +8,7 @@
     <meta name="keywords" content="physics, chemistry, math, graphs, science, plot, regression, linear, polynomial, exponential, scatter, data, pablo, vaz, fisicamaldonado">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="aurabesh.css">
+    <link rel="stylesheet" href="aurabesh2.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
@@ -20,17 +20,17 @@
   <h2 id="h2-special">O</h2>
 </div>
 <div style="text-align: right;">
-    <button id="button-lang" style="font-weight: bold; background-color: #377A7E; border-color:#2c5b5e;" type="button" class="btn btn-primary" onclick="window.location.href='index.html'">ESP</button>
-    <button id="button-lang" type="button" class="btn btn-primary" onclick="window.location.href='english.html'" style="font-weight: bold; background-color: #377A7E; border-color:#2c5b5e;">ENG</button>
-    <button id="button-lang" type="button" class="btn btn-primary" onclick="window.location.href='aurabesh2.html'" style="font-weight: bold; background-color: #377A7E; border-color:#2c5b5e;">JEDI</button>
+    <button id="button-lang" style="font-weight: bold; background-color: rgb(182,160,80); border-color: rgb(163, 143, 71);" type="button" class="btn btn-primary" onclick="window.location.href='index.html'">ESP</button>
+    <button id="button-lang" type="button" class="btn btn-primary" onclick="window.location.href='english.html'" style="font-weight: bold; background-color: rgb(182,160,80); border-color: rgb(163, 143, 71);">ENG</button>
+    <button id="button-lang" type="button" class="btn btn-primary" onclick="window.location.href='aurabesh.html'" style="font-weight: bold; background-color: rgb(182,160,80); border-color: rgb(163, 143, 71);">SITH</button>
 </div>
 <p></p>
 <h3 id="h3-special">Y</h3>
 <h3>How it works?</h3>
 <h3 id="h3-special">F</h3>
 <p>After setting the axis labels, enter the x and y data in the table. Press "Enter" to generate more rows. When finished, click the "Confirm data" button to verify and plot the entered data. Please refer to the YouTube or Github tutorials if necessary.</p>
-<button id="langButton"  type="button" class="btn btn-primary" onclick="window.open('https://www.youtube.com/watch?v=dABC1D7pXek', '_blank')" style=" background-color: #377A7E; border-color:#2c5b5e;" target="_blank">Youtube tutorial</button>
-<button id="langButton" type="button" class="btn btn-primary" onclick="window.open('https://github.com/fisicamaldonado/graficas#readme', '_blank')" style="background-color: #377A7E; border-color:#2c5b5e;" target="_blank">Github</button>
+<button id="langButton"  type="button" class="btn btn-primary" onclick="window.open('https://www.youtube.com/watch?v=dABC1D7pXek', '_blank')" style=" background-color: rgb(182,160,80); border-color: rgb(163, 143, 71);" target="_blank">Youtube tutorial</button>
+<button id="langButton" type="button" class="btn btn-primary" onclick="window.open('https://github.com/fisicamaldonado/graficas#readme', '_blank')" style="background-color: rgb(182,160,80); border-color: rgb(163, 143, 71);" target="_blank">Github</button>
 <p></p>
 <p>[Important] Currently, the application only supports positive (x,y) inputs, which will be useful for sketching graphs in most Science laboratory experiments. </p>
 <p></p>
@@ -54,7 +54,7 @@
     </table>
   </div>
   <p></p>
-  <button style="background-color: #377A7E; border-color:#2c5b5e;" id= "axisButton" type="button" onclick="asignarEjes()" class="btn btn-primary" disabled>Assign Labels</button>
+  <button style="background-color: rgb(182,160,80); border-color: rgb(163, 143, 71);" id= "axisButton" type="button" onclick="asignarEjes()" class="btn btn-primary" disabled>Assign Labels</button>
   <p></p> 
   <div id="tableContainer">
     <table>
@@ -68,10 +68,10 @@
     </table>
     </div>
     <div>
-      <button style="background-color: #377A7E; border-color:#2c5b5e; display: none;" type="button" id="botonEliminar" onclick="eliminarFila()" class="btn btn-primary">Delete Row</button>
+      <button style="background-color: rgb(182,160,80); border-color: rgb(163, 143, 71); display: none;" type="button" id="botonEliminar" onclick="eliminarFila()" class="btn btn-primary">Delete Row</button>
     </div>
     <p></p>
-  <button style="background-color: #377A7E; border-color:#2c5b5e;" type="submit" id="submitButton" class="btn btn-primary">Confirm Data</button>
+  <button style="background-color: rgb(182,160,80); border-color: rgb(163, 143, 71);" type="submit" id="submitButton" class="btn btn-primary">Confirm Data</button>
 </form>
     
 <div class="mt-4">
@@ -85,26 +85,26 @@
 <canvas id="chartCanvas" width="360" height="360"></canvas>
 </div>
 <p id="trendTypes" style="display: none;">Trend lines:</p>
-<button style="background-color: #377A7E; border-color:#2c5b5e; display: none;" type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary">Linear</button>
-<button style="background-color: #377A7E; border-color:#2c5b5e; display: none;"  id="trendButton" onclick="NotLinearTrend()" class="btn btn-primary">Polynomial</button>
-<button style="background-color: #377A7E; border-color:#2c5b5e; display: none;"  id="expTrendButton" onclick="Exponential()" class="btn btn-primary">Exponential</button>
+<button style="background-color: rgb(182,160,80); border-color: rgb(163, 143, 71); display: none;" type="button" id="lineButton" onclick="plotLine()" class="btn btn-primary">Linear</button>
+<button style="background-color: rgb(182,160,80); border-color: rgb(163, 143, 71); display: none;"  id="trendButton" onclick="NotLinearTrend()" class="btn btn-primary">Polynomial</button>
+<button style="background-color: rgb(182,160,80); border-color: rgb(163, 143, 71); display: none;"  id="expTrendButton" onclick="Exponential()" class="btn btn-primary">Exponential</button>
 <p></p>
 <p id="textFunction" style="display: none;">The curve function is: </p>
 <p class='centered' style="font-family: JetBrains Mono, monospace; display: none;" id ="trendFunction">linealFunctionText</p>
 
 <p id="descarga_parrafo" style="display: none;">If desired, click the "Download Data" button to save the "data.txt" file in your device.</p>
-<button style="background-color: #377A7E; border-color:#2c5b5e; display: none;" type="button" id="downloadButton" onclick="downloadData()" class="btn btn-primary" style="display: none;">Download Data</button>
-<button style="background-color: #377A7E; border-color:#2c5b5e;" onclick="location.reload();" class="btn btn-primary">Reset</button>
+<button style="background-color: rgb(182,160,80); border-color: rgb(163, 143, 71); display: none;" type="button" id="downloadButton" onclick="downloadData()" class="btn btn-primary" style="display: none;">Download Data</button>
+<button style="background-color: rgb(182,160,80); border-color: rgb(163, 143, 71);" onclick="location.reload();" class="btn btn-primary">Reset</button>
 <p></p>
-<a href="https://www.amazon.com/dp/B086PN2L63" target="_blank"><p class='credits' style="font-weight:bold; color:aquamarine;">Would you like to support my work? Thanks!</p></a>
+<a href="https://www.amazon.com/dp/B086PN2L63" target="_blank"><p class='credits' style="font-weight:bold; color:rgb(182,160,80)">Would you like to support my work? Thanks!</p></a>
 <div style="display: flex; justify-content: center;">
 <a href="https://www.amazon.com/dp/B086PN2L63" class="centered" target="_blank"><img style = "width: 100%; max-width: 400px; height: auto;" src="plots_icons/banner_eng.gif" alt="banner_en"></a>
 </div>
 <p></p>
 <p class="credits"> Thanks padawan for using this app! The force is strong in you...</p>
-<p class='credits' style="font-weight:bold; color:#ca59ed;">(c)2023 Pablo Vaz - Maldonado, Uruguay</p>
+<p class='credits' style="font-weight:bold; color:rgb(182,160,80)">(c)2023 Pablo Vaz - Maldonado, Uruguay</p>
 <div class="centered">
-  <h3 id="h3-special" style="color:#ca59ed;"> r o j 2 4 5 6</h3>
+  <h3 id="h3-special" style="color:rgb(182,160,80)"> r o j 2 4 5 6</h3>
 </div>
 <script>
 
@@ -317,7 +317,7 @@ function drawChart() {
     var maxY = Math.max(...points.map(point => point.y));
 
     ctx.beginPath();
-    ctx.strokeStyle = 'aquamarine';
+    ctx.strokeStyle = 'rgb(83, 73, 37)';
     ctx.moveTo(margin, chartCanvas.height - margin);
     ctx.lineTo(margin, margin);
     ctx.lineTo(margin - 5, margin + 10); // Arrows
@@ -342,7 +342,7 @@ function drawChart() {
         ctx.moveTo(margin - 5, chartCanvas.height - margin - i * segmentLengthY);
         ctx.lineTo(margin + 5, chartCanvas.height - margin - i * segmentLengthY);
 
-        ctx.fillStyle = "aquamarine";
+        ctx.fillStyle = "rgb(83, 73, 37)";
         ctx.font = '10px Arial';
         ctx.textAlign = 'center';
         ctx.fillText(divisionX.toFixed(2), margin + i * segmentLengthX, chartCanvas.height - margin + 15);
@@ -358,7 +358,7 @@ function drawChart() {
 
         ctx.beginPath();
         ctx.arc(xCoord, yCoord, 3, 0, 2 * Math.PI);
-        ctx.fillStyle = "aquamarine";
+        ctx.fillStyle = "rgb(83, 73, 37)";
         ctx.fill();
         ctx.stroke();
     }
@@ -366,7 +366,7 @@ function drawChart() {
     // Add axis
     ctx.font = '12px Arial';
     ctx.textAlign = 'end';
-    ctx.fillStyle = "aquamarine";
+    ctx.fillStyle = "rgb(83, 73, 37)";
     ctx.fillText('0', margin - 5, chartCanvas.height - margin + 15);
     ctx.fillText(labelX, chartCanvas.width - margin/2, chartCanvas.height - margin/4);
     ctx.textAlign = 'start';
@@ -412,7 +412,7 @@ function plotLine() {
     ctx.beginPath();
     ctx.moveTo(xStart, yStart);
     ctx.lineTo(xEnd, yEnd);
-    ctx.strokeStyle = '#ca59ed';
+    ctx.strokeStyle = 'rgb(182,160,80)';
     ctx.lineWidth = 2;
     ctx.stroke();
 
@@ -470,7 +470,7 @@ function Exponential() {
       var yCoord = chartCanvas.height - margin - (y / maxY) * chartHeight;
       ctx.lineTo(xCoord, yCoord);
     }
-    ctx.strokeStyle = 'blue';
+    ctx.strokeStyle = 'rgb(182,160,80)';
     ctx.lineWidth = 2;
     ctx.stroke();
 
@@ -642,7 +642,7 @@ function drawQuadraticCurve(coefficients) {
     ctx.lineTo(xCoord, yCoord);
     console.log("xCoord = " + xCoord + " yCoord = " + yCoord);
   }
-    ctx.strokeStyle = 'blue';
+    ctx.strokeStyle = 'rgb(182,160,80)';
     ctx.lineWidth = 2;
     ctx.stroke();
   
