@@ -4,8 +4,6 @@
 
 The Plots XY app allows users to create sketches of XY graphs based on provided data. It also provides the ability to add trend lines (Linear, Polynomial, Exponential) and download the data in TXT format.
 
-**Please note that this project is currently under construction, and there are many more functionalities planned to be added in the future.**
-
 ## Features
 
 - Create XY graphs: Input your data points and visualize them on a graph.
@@ -64,7 +62,6 @@ Prof. Pablo Vaz - Maldonado, Uruguay.
 
 La aplicación Plots XY es ideal para crear bosquejos de gráficas XY a partir de los datos proporcionados. Permite además agregar líneas de tendencia (Lineal, Polinómica, Exponencial) y descargar los datos en formato TXT.
 
-**Este proyecto está actualmente en construcción y se planean agregar más funcionalidades en el futuro.**
 
 ## ¿Qué se puede hacer con Plots XY?
 
@@ -74,8 +71,6 @@ La aplicación Plots XY es ideal para crear bosquejos de gráficas XY a partir d
 - Descargar datos: Guarde sus datos en formato TXT para un análisis posterior o compartirlos.
 
 ## Instrucciones
-
-Puede acceder al tutorial en YouTube (en Español) -> [YouTube Tutorial](https://youtu.be/w5Aml5HAUe8)
 
 1. Abra la aplicación en cualquier navegador: [Plots XY](https://plots-xy.com/)
 2. Ingrese las magnitudes y unidades a estudiar como etiquetas de los ejes X e Y.
